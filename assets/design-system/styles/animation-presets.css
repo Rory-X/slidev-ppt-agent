@@ -1,42 +1,98 @@
 /*
-  Animation presets for Slidev slides.
-  These are CSS-level helpers; actual reveal behavior uses
-  Slidev's v-click / v-clicks directives in markdown.
+  Animation Strategy (page-type → transition / reveal):
+  Cover: fade-out, no v-click | TOC: fade-out, v-clicks on cards
+  Content-split: slide-left, left first then right v-click
+  Three-cards: slide-left, v-clicks left-to-right
+  Code-showcase: slide-left, line highlight + right cards v-click
+  Summary: fade-out, v-clicks on recap cards
 
-  This file documents the intended animation strategy per page type
-  so the slide-composer skill can reference it.
+  Constraints: max 2 reveals/slide, adjacent slides vary transitions,
+  section dividers use fade, content slides use slide-left.
 */
 
-/*
-  === Animation Strategy by Page Type ===
+/* --- Time Tokens --- */
 
-  Cover:        transition: fade-out | no v-click
-  TOC:          transition: fade-out | v-clicks on each card
-  Content-split: transition: slide-left | left first, right v-click
-  Three-cards:  transition: slide-left | v-clicks left-to-right
-  Detail-two-col: transition: slide-left | together or left-right step
-  Code-showcase: transition: slide-left | line highlight + right cards v-click
-  Summary:      transition: fade-out | v-clicks on recap cards, closing together
-
-  === Global Constraints ===
-
-  - Max 2 reveal effects per slide
-  - Adjacent slides should NOT share the same transition
-  - Section dividers: fade
-  - Content slides: slide-left
-*/
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+:root {
+  --ppt-duration-fast: 0.25s;
+  --ppt-duration-normal: 0.4s;
+  --ppt-duration-slow: 0.6s;
+  --ppt-easing: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* --- Entrance Animations --- */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fadeIn var(--ppt-duration-normal) var(--ppt-easing) both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .animate-fade-in-up {
-  animation: fadeInUp 0.4s ease-out both;
+  animation: fadeInUp var(--ppt-duration-normal) var(--ppt-easing) both;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); }
+  to { transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slideUp var(--ppt-duration-normal) var(--ppt-easing) both;
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scaleIn var(--ppt-duration-normal) var(--ppt-easing) both;
+}
+
+/* --- Emphasis Animations --- */
+
+@keyframes pulseSubtle {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+.animate-pulse-subtle {
+  animation: pulseSubtle 2s ease-in-out infinite;
+}
+
+@keyframes highlightFlash {
+  0% { box-shadow: 0 0 0 0 rgba(var(--ppt-primary-rgb, 100, 100, 255), 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(var(--ppt-primary-rgb, 100, 100, 255), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--ppt-primary-rgb, 100, 100, 255), 0); }
+}
+.animate-highlight-flash {
+  animation: highlightFlash 0.6s ease-out;
+}
+
+/* --- Exit Animation --- */
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.animate-fade-out {
+  animation: fadeOut var(--ppt-duration-normal) var(--ppt-easing) both;
+}
+
+/* --- Reduced Motion Fallback --- */
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-fade-in-up,
+  .animate-slide-up,
+  .animate-scale-in,
+  .animate-fade-out,
+  .animate-pulse-subtle,
+  .animate-highlight-flash {
+    animation-duration: 0.01s !important;
+    transition-duration: 0.01s !important;
+  }
 }

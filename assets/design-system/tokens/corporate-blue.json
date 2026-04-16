@@ -1,0 +1,60 @@
+{
+  "name": "corporate-blue",
+  "description": "Professional blue palette for executive and business presentations",
+  "color": {
+    "background": "#0F172A",
+    "surface": "#1E293B",
+    "surfaceHover": "#273548",
+    "border": "rgba(255,255,255,0.08)",
+    "primary": "#3B82F6",
+    "secondary": "#6366F1",
+    "accentWarm": "#F59E0B",
+    "success": "#22C55E",
+    "danger": "#EF4444",
+    "textPrimary": "#F8FAFC",
+    "textSecondary": "#94A3B8",
+    "textMuted": "#64748B"
+  },
+  "typography": {
+    "fontDisplay": "Inter, system-ui, sans-serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "fontMono": "Fira Code, monospace",
+    "scale": {
+      "display": "2.5rem",
+      "h1": "1.75rem",
+      "h2": "1.25rem",
+      "body": "0.95rem",
+      "caption": "0.75rem"
+    },
+    "weight": { "normal": 400, "bold": 700 }
+  },
+  "spacing": {
+    "cardPadding": "24px",
+    "cardGap": "20px",
+    "sectionBarWidth": "4px",
+    "safeMargin": "48px"
+  },
+  "shape": {
+    "borderRadius": "8px",
+    "borderWidth": "1px"
+  },
+  "shadow": {
+    "card": "0 2px 16px rgba(0,0,0,0.18)",
+    "elevated": "0 8px 32px rgba(0,0,0,0.25)"
+  },
+  "motion": {
+    "maxRevealPerSlide": 1,
+    "transition": "fade",
+    "duration": {
+      "fast": "0.2s",
+      "normal": "0.35s",
+      "slow": "0.5s"
+    },
+    "easing": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+    "narrativePacing": {
+      "setup": "normal",
+      "evidence": "normal",
+      "resolution": "fast"
+    }
+  }
+}

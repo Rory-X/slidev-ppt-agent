@@ -1,0 +1,60 @@
+{
+  "name": "mono-editorial",
+  "description": "Minimalist grayscale palette for research and editorial presentations",
+  "color": {
+    "background": "#FAFAFA",
+    "surface": "#FFFFFF",
+    "surfaceHover": "#F4F4F5",
+    "border": "rgba(0,0,0,0.08)",
+    "primary": "#18181B",
+    "secondary": "#71717A",
+    "accentWarm": "#D97706",
+    "success": "#16A34A",
+    "danger": "#DC2626",
+    "textPrimary": "#18181B",
+    "textSecondary": "#52525B",
+    "textMuted": "#A1A1AA"
+  },
+  "typography": {
+    "fontDisplay": "Source Serif 4, Georgia, serif",
+    "fontBody": "Source Sans 3, system-ui, sans-serif",
+    "fontMono": "Source Code Pro, monospace",
+    "scale": {
+      "display": "2.5rem",
+      "h1": "1.75rem",
+      "h2": "1.25rem",
+      "body": "0.95rem",
+      "caption": "0.75rem"
+    },
+    "weight": { "normal": 400, "bold": 700 }
+  },
+  "spacing": {
+    "cardPadding": "24px",
+    "cardGap": "20px",
+    "sectionBarWidth": "3px",
+    "safeMargin": "48px"
+  },
+  "shape": {
+    "borderRadius": "6px",
+    "borderWidth": "1px"
+  },
+  "shadow": {
+    "card": "0 1px 8px rgba(0,0,0,0.06)",
+    "elevated": "0 4px 20px rgba(0,0,0,0.10)"
+  },
+  "motion": {
+    "maxRevealPerSlide": 1,
+    "transition": "fade",
+    "duration": {
+      "fast": "0.2s",
+      "normal": "0.3s",
+      "slow": "0.45s"
+    },
+    "easing": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+    "narrativePacing": {
+      "setup": "normal",
+      "evidence": "slow",
+      "resolution": "normal"
+    }
+  }
+}

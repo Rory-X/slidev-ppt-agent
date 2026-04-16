@@ -1,6 +1,32 @@
 # PPT Harness -- Agent Behavior Contract
 
-This repository is an Agent-driven PPT production harness. The Agent (not scripts) performs all content work. This contract applies to any Agent platform (Cursor, Claude Code, Codex, etc.).
+This repository is an Agent-driven PPT production harness. The Agent (not scripts) performs all content work. This contract applies to any Agent platform (Cursor, Claude Code, Codex, opencode, codebuddy, etc.).
+
+## Architecture: Skills + Agents
+
+```
+.agents/
+├── skills/     # Knowledge layer: domain expertise per phase
+│   ├── ppt-research/SKILL.md
+│   ├── ppt-design-director/SKILL.md
+│   ├── ppt-outline-architect/SKILL.md
+│   ├── ppt-slide-composer/SKILL.md
+│   ├── ppt-preview/SKILL.md
+│   ├── ppt-review/SKILL.md
+│   ├── ppt-publish/SKILL.md
+│   └── slidev/SKILL.md
+└── agents/     # Execution layer: role definitions with I/O contracts
+    ├── researcher.md
+    ├── designer.md
+    ├── architect.md
+    ├── composer.md
+    ├── reviewer.md
+    └── engineer.md
+```
+
+**Skill** = domain knowledge ("how to do research", "how to write Slidev") -- pure instructional docs.
+
+**Agent** = execution role ("I am the researcher, I use ppt-research skill, my input is brief, my output is research-report, I can parallelize across dimensions") -- includes I/O contract, file ownership, and parallel strategy.
 
 ## Commands
 
@@ -11,22 +37,123 @@ Produce a complete, high-quality Slidev presentation.
 **Phases** (execute in order, no skipping):
 
 1. **Clarify** -- if requirement lacks audience/scenario/goal, ask before proceeding
-2. **Research** -- multi-dimensional WebSearch, produce `research-report.md`
-3. **Style Decision** -- read `design-system/`, select archetype + tokens, produce `style-plan.md`
-4. **Outline** -- Pyramid Principle structure, produce `outline.json`, validate with `node scripts/validate-outline.js`
-5. **Compose** -- write `slides-<topic>.md` following Slidev skill + design system + Bento Grid rules
-6. **Preview** -- build with `npx slidev build`, serve with `node scripts/static-preview-server.js`, return URL
-7. **Review** -- check for visual issues, fix if needed
+2. **Research** -- dispatch to researcher agent, produce `research-report.md`
+3. **Style Decision** -- dispatch to designer agent, produce `style-plan.md`
+4. **Outline** -- dispatch to architect agent, produce `outline.json`, validate with `node scripts/validate-outline.js`
+5. **Compose** -- dispatch to composer agent, write `slides-<topic>.md`
+6. **Preview** -- dispatch to engineer agent, build and serve, return URL
+7. **Review** -- dispatch to reviewer agent, fix issues if found
 
 **Mandatory output**: preview URL + artifact directory path.
 
 ### `/ppt-review [slides-file]`
 
-Review an existing slides file against the full quality checklist (overflow, Mermaid, typography, animation, visual consistency, content). Fix issues, rebuild, return updated preview URL.
+Review an existing slides file against the full quality checklist. Fix issues, rebuild, return updated preview URL.
 
 ### `/ppt-publish [vercel|github-pages]`
 
 Publish built deck to static hosting. Ask user to choose target if not specified.
+
+## Orchestration Strategy
+
+### Mode Selection
+
+The orchestrator SHOULD use subagent dispatch when the platform supports it (Cursor Task tool, Claude Code Agent Teams). When not available, fall back to sequential single-agent execution. The pipeline phases and quality standards are the same regardless of mode.
+
+### Phase Dependency Graph
+
+```
+Clarify (orchestrator, never delegate)
+    │
+    ▼
+Research (researcher agent) ─── can parallelize search dimensions
+    │
+    ▼
+Style Decision (designer agent)
+    │
+    ▼
+Outline (architect agent)
+    │
+    ▼
+Compose (composer agent) ─── can parallelize by outline part
+    │
+    ▼
+Preview (engineer agent)
+    │
+    ▼
+Review (reviewer agent) ─── can parallelize by check category
+    │
+    ▼
+Deliver
+```
+
+### Dispatch Rules
+
+1. **Phase 1 (Clarify)**: Always orchestrator. Never delegate -- requires user interaction.
+
+2. **Phase 2 (Research)**: Dispatch to researcher agent.
+   - Read `.agents/agents/researcher.md` for role contract and parallel strategy.
+   - If platform supports parallel subtasks: spawn per-dimension searches.
+   - Wait for all subtasks, then merge into single `research-report.md`.
+
+3. **Phase 3 (Style)**: Dispatch to designer agent. Sequential, depends on `research-report.md`.
+
+4. **Phase 4 (Outline)**: Dispatch to architect agent. Sequential, depends on `research-report.md` + `style-plan.md`.
+
+5. **Phase 5 (Compose)**: Dispatch to composer agent.
+   - Read `.agents/agents/composer.md` for parallel part strategy.
+   - If outline has 3+ parts AND total pages >= 12: parallelize by part.
+   - Orchestrator handles headmatter + cover/TOC/end page merge.
+
+6. **Phase 6 (Preview)**: Dispatch to engineer agent. Sequential.
+
+7. **Phase 7 (Review)**: Dispatch to reviewer agent.
+   - Read `.agents/agents/reviewer.md` for parallel category strategy.
+   - If platform supports: spawn per-category review subtasks.
+
+### Subagent Prompt Template
+
+When dispatching a subagent, the orchestrator MUST include:
+
+```
+You are the [ROLE] agent for this PPT project.
+
+Read your role definition: .agents/agents/[ROLE].md
+Read your skill(s): .agents/skills/[SKILL]/SKILL.md
+
+Your inputs (already exist in workspace):
+- [list of input files with paths]
+
+Your task:
+[specific task description for this phase]
+
+Write your output to: [output file path]
+Return a summary of what you produced.
+```
+
+### File Ownership Matrix
+
+Prevents write conflicts when subagents run in parallel:
+
+| Agent | Writable | Read-only |
+|-------|----------|-----------|
+| researcher | `artifacts/research-report.md` | `brief.json` |
+| designer | `artifacts/style-plan.md` | `research-report.md`, `design-system/*` |
+| architect | `artifacts/outline.json` | `research-report.md`, `style-plan.md`, `schemas/*` |
+| composer | `slides-<topic>.md`, `artifacts/_part-*.md` | `outline.json`, `style-plan.md`, `design-system/*` |
+| reviewer | `slides-<topic>.md` (fix), `artifacts/review-report.md` | `research-report.md`, `style-plan.md` |
+| engineer | `artifacts/*/site/`, `dist/` | `slides-<topic>.md` |
+
+## Agent Roles
+
+| Agent | Path | Skills | Parallelizable |
+|-------|------|--------|----------------|
+| researcher | `.agents/agents/researcher.md` | ppt-research | Yes: per-dimension search |
+| designer | `.agents/agents/designer.md` | ppt-design-director | No |
+| architect | `.agents/agents/architect.md` | ppt-outline-architect | No |
+| composer | `.agents/agents/composer.md` | ppt-slide-composer, slidev | Yes: per-outline-part |
+| reviewer | `.agents/agents/reviewer.md` | ppt-review | Yes: per-check-category |
+| engineer | `.agents/agents/engineer.md` | ppt-preview, ppt-publish | No |
 
 ## Skills Available
 
@@ -40,18 +167,18 @@ Publish built deck to static hosting. Ask user to choose target if not specified
 | ppt-review | `.agents/skills/ppt-review/` | Quality review checklist + auto-fix |
 | ppt-publish | `.agents/skills/ppt-publish/` | Vercel / GitHub Pages deployment |
 | slidev | `.agents/skills/slidev/` | Slidev syntax, overflow rules, layout reference |
-| deploy-to-vercel | `.agents/skills/deploy-to-vercel/` | Vercel deployment guidance |
 
 ## Design System Resources
 
 | Resource | Path | Purpose |
 |----------|------|---------|
 | Reference style | `design-system/reference-style.md` | Visual benchmark (aesthetic baseline) |
-| Tokens | `design-system/tokens/*.json` | Color/typography/spacing tokens |
+| Animation strategy | `design-system/animation-strategy.md` | Animation best practices and decision framework |
+| Tokens | `design-system/tokens/*.json` | Color/typography/spacing/motion tokens |
 | Archetypes | `design-system/archetypes/*.yaml` | Narrative structure templates |
 | Page templates | `design-system/page-templates/*.md` | Visual design language examples |
 | CSS classes | `design-system/styles/*.css` | Importable global styles |
-| Layout patterns | `design-system/layouts/bento-patterns.md` | Supplementary layout reference |
+| Layout patterns | `design-system/layouts/bento-patterns.md` | Bento Grid layout reference |
 
 ## Schemas
 
@@ -61,15 +188,13 @@ Publish built deck to static hosting. Ask user to choose target if not specified
 | Outline | `schemas/outline.schema.json` | Generated outline |
 | Research | `schemas/research-report.schema.json` | Research report |
 
-## Engineering Scripts (Agent calls these, does not replace them)
+## Engineering Scripts
 
 | Script | Purpose |
 |--------|---------|
 | `scripts/static-preview-server.js` | Local static file server with port retry |
-| `scripts/validate-outline.js` | JSON schema validation for outline |
+| `scripts/validate-outline.js` | Outline validation (page count + structure) |
 | `scripts/validate-style.js` | Style consistency checks |
-| `scripts/ppt-publish.js` | Vercel / GitHub Pages publish |
-| `scripts/build-landing.js` | Landing page generator |
 
 ## Core Principles
 
@@ -77,3 +202,5 @@ Publish built deck to static hosting. Ask user to choose target if not specified
 - Scripts only for engineering tasks Agent cannot do (build, serve, deploy, validate)
 - Design system defines aesthetic baseline, not creative ceiling
 - Every claim in slides must trace to research evidence
+- Subagent dispatch is an optional acceleration, not a requirement
+- All phases work in single-agent sequential mode as fallback

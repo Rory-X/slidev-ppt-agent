@@ -2,6 +2,17 @@
 
 This project is an Agent-driven PPT production harness, scaffolded by [slidev-ppt-agent](https://github.com/Rory-X/slidev-ppt-agent). The Agent (not scripts) performs all content work. This contract applies to any Agent platform (Cursor, Claude Code, Codex, opencode, codebuddy, etc.).
 
+## Architecture: Skills + Agents
+
+```
+.agents/
+├── skills/     # Knowledge layer: domain expertise per phase
+└── agents/     # Execution layer: role definitions with I/O contracts
+```
+
+**Skill** = domain knowledge ("how to do research") -- pure instructional docs.
+**Agent** = execution role ("I am the researcher, input is brief, output is research-report") -- includes I/O contract, file ownership, parallel strategy.
+
 ## Commands
 
 ### `/ppt-creator <requirement>`
@@ -11,66 +22,65 @@ Produce a complete, high-quality Slidev presentation.
 **Phases** (execute in order, no skipping):
 
 1. **Clarify** -- if requirement lacks audience/scenario/goal, ask before proceeding
-2. **Research** -- multi-dimensional WebSearch, produce `research-report.md`
-3. **Style Decision** -- read `design-system/`, select archetype + tokens, produce `style-plan.md`
-4. **Outline** -- Pyramid Principle structure, produce `outline.json`, validate with `node scripts/validate-outline.js`
-5. **Compose** -- write `slides-<topic>.md` following Slidev skill + design system + Bento Grid rules
-6. **Preview** -- build with `npx slidev build`, serve with `node scripts/static-preview-server.js`, return URL
-7. **Review** -- check for visual issues, fix if needed
+2. **Research** -- dispatch to researcher agent, produce `research-report.md`
+3. **Style Decision** -- dispatch to designer agent, produce `style-plan.md`
+4. **Outline** -- dispatch to architect agent, produce `outline.json`, validate with `node scripts/validate-outline.js`
+5. **Compose** -- dispatch to composer agent, write `slides-<topic>.md`
+6. **Preview** -- dispatch to engineer agent, build and serve, return URL
+7. **Review** -- dispatch to reviewer agent, fix issues if found
 
 **Mandatory output**: preview URL + artifact directory path.
 
 ### `/ppt-review [slides-file]`
 
-Review an existing slides file against the full quality checklist (overflow, Mermaid, typography, animation, visual consistency, content). Fix issues, rebuild, return updated preview URL.
+Review an existing slides file against the full quality checklist. Fix issues, rebuild, return updated preview URL.
 
 ### `/ppt-publish [vercel|github-pages]`
 
 Publish built deck to static hosting. Ask user to choose target if not specified.
 
-## Skills Available
+## Orchestration Strategy
 
-| Skill | Path | Role |
-|-------|------|------|
-| ppt-research | `.agents/skills/ppt-research/` | Deep multi-dimensional research |
-| ppt-design-director | `.agents/skills/ppt-design-director/` | Style/archetype/token selection |
-| ppt-outline-architect | `.agents/skills/ppt-outline-architect/` | Pyramid Principle outline generation |
-| ppt-slide-composer | `.agents/skills/ppt-slide-composer/` | Slidev markdown composition with Bento Grid |
-| ppt-preview | `.agents/skills/ppt-preview/` | Build and local preview |
-| ppt-review | `.agents/skills/ppt-review/` | Quality review checklist + auto-fix |
-| ppt-publish | `.agents/skills/ppt-publish/` | Vercel / GitHub Pages deployment |
-| slidev | `.agents/skills/slidev/` | Slidev syntax, overflow rules, layout reference |
+The orchestrator SHOULD use subagent dispatch when the platform supports it (Cursor Task tool, Claude Code Agent Teams). When not available, fall back to sequential single-agent execution. Read `.agents/agents/*.md` for each role's parallel strategy.
+
+### File Ownership Matrix
+
+| Agent | Writable | Read-only |
+|-------|----------|-----------|
+| researcher | `artifacts/research-report.md` | `brief.json` |
+| designer | `artifacts/style-plan.md` | `research-report.md`, `design-system/*` |
+| architect | `artifacts/outline.json` | `research-report.md`, `style-plan.md`, `schemas/*` |
+| composer | `slides-<topic>.md`, `artifacts/_part-*.md` | `outline.json`, `style-plan.md`, `design-system/*` |
+| reviewer | `slides-<topic>.md` (fix), `artifacts/review-report.md` | `research-report.md`, `style-plan.md` |
+| engineer | `artifacts/*/site/`, `dist/` | `slides-<topic>.md` |
+
+## Agent Roles
+
+| Agent | Path | Skills | Parallelizable |
+|-------|------|--------|----------------|
+| researcher | `.agents/agents/researcher.md` | ppt-research | Yes: per-dimension |
+| designer | `.agents/agents/designer.md` | ppt-design-director | No |
+| architect | `.agents/agents/architect.md` | ppt-outline-architect | No |
+| composer | `.agents/agents/composer.md` | ppt-slide-composer, slidev | Yes: per-part |
+| reviewer | `.agents/agents/reviewer.md` | ppt-review | Yes: per-category |
+| engineer | `.agents/agents/engineer.md` | ppt-preview, ppt-publish | No |
 
 ## Design System Resources
 
 | Resource | Path | Purpose |
 |----------|------|---------|
-| Reference style | `design-system/reference-style.md` | Visual benchmark (aesthetic baseline) |
-| Tokens | `design-system/tokens/*.json` | Color/typography/spacing tokens |
-| Archetypes | `design-system/archetypes/*.yaml` | Narrative structure templates |
-| Page templates | `design-system/page-templates/*.md` | Visual design language examples |
-| CSS classes | `design-system/styles/*.css` | Importable global styles |
-| Layout patterns | `design-system/layouts/bento-patterns.md` | Supplementary layout reference |
-
-## Schemas
-
-| Schema | Path | Validates |
-|--------|------|-----------|
-| Brief | `schemas/brief.schema.json` | User input structure |
-| Outline | `schemas/outline.schema.json` | Generated outline |
-| Research | `schemas/research-report.schema.json` | Research report |
-
-## Engineering Scripts (Agent calls these, does not replace them)
-
-| Script | Purpose |
-|--------|---------|
-| `scripts/static-preview-server.js` | Local static file server with port retry |
-| `scripts/validate-outline.js` | JSON schema validation for outline |
-| `scripts/validate-style.js` | Style consistency checks |
+| Reference style | `design-system/reference-style.md` | Visual benchmark |
+| Animation strategy | `design-system/animation-strategy.md` | Animation decisions |
+| Tokens | `design-system/tokens/*.json` | Color/typography/spacing/motion tokens |
+| Archetypes | `design-system/archetypes/*.yaml` | Narrative structures |
+| Page templates | `design-system/page-templates/*.md` | Layout examples |
+| CSS classes | `design-system/styles/*.css` | Importable styles |
+| Layout patterns | `design-system/layouts/bento-patterns.md` | Bento Grid reference |
 
 ## Core Principles
 
 - Agent does all content work (research, outline, slides, review)
-- Scripts only for engineering tasks Agent cannot do (build, serve, deploy, validate)
+- Scripts only for engineering tasks (build, serve, deploy, validate)
 - Design system defines aesthetic baseline, not creative ceiling
 - Every claim in slides must trace to research evidence
+- Subagent dispatch is optional -- sequential is always valid

@@ -1,32 +1,60 @@
 {
   "name": "tech-minimal",
-  "description": "Calm technical presentation for architecture and engineering talks.",
-  "palette": {
-    "background": "#0B1020",
+  "description": "Clean, focused palette for technical presentations",
+  "color": {
+    "background": "#0B1120",
     "surface": "#131A2E",
+    "surfaceHover": "#1A2340",
+    "border": "rgba(255,255,255,0.08)",
     "primary": "#4DA3FF",
-    "secondary": "#2DD4BF",
-    "textPrimary": "#E6ECFF",
-    "textSecondary": "#A8B3CF",
-    "accent": "#F59E0B"
+    "secondary": "#A78BFA",
+    "accentWarm": "#F59E0B",
+    "success": "#10B981",
+    "danger": "#EF4444",
+    "textPrimary": "#F1F5F9",
+    "textSecondary": "#94A3B8",
+    "textMuted": "#64748B"
   },
   "typography": {
-    "titleFont": "Noto Sans SC",
-    "bodyFont": "Noto Sans SC",
-    "monoFont": "Fira Code",
-    "titleWeight": 700,
-    "bodyWeight": 400
+    "fontDisplay": "Inter, system-ui, sans-serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "fontMono": "Fira Code, monospace",
+    "scale": {
+      "display": "2.5rem",
+      "h1": "1.75rem",
+      "h2": "1.25rem",
+      "body": "0.95rem",
+      "caption": "0.75rem"
+    },
+    "weight": { "normal": 400, "bold": 700 }
   },
   "spacing": {
-    "gridGap": 20,
-    "sectionPadding": 28
+    "cardPadding": "24px",
+    "cardGap": "20px",
+    "sectionBarWidth": "4px",
+    "safeMargin": "40px"
   },
   "shape": {
-    "cardRadius": 16,
-    "cardBorderWidth": 1
+    "borderRadius": "12px",
+    "borderWidth": "1px"
+  },
+  "shadow": {
+    "card": "0 4px 24px rgba(0,0,0,0.2)",
+    "elevated": "0 12px 40px rgba(0,0,0,0.3)"
   },
   "motion": {
     "maxRevealPerSlide": 2,
-    "transition": "slide-left"
+    "transition": "slide-left",
+    "duration": {
+      "fast": "0.25s",
+      "normal": "0.4s",
+      "slow": "0.6s"
+    },
+    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "narrativePacing": {
+      "setup": "slow",
+      "evidence": "normal",
+      "resolution": "fast"
+    }
   }
 }

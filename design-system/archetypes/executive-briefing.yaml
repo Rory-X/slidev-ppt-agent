@@ -1,0 +1,36 @@
+name: executive-briefing
+description: High-level briefing for executives and decision-makers. Focuses on situation assessment, key findings, recommendations, and clear asks. Minimal technical detail.
+recommendedToken: corporate-blue
+narrativePhases:
+  - situation
+  - findings
+  - recommendation
+  - ask
+phaseSlideRange:
+  situation: [1, 2]
+  findings: [3, 5]
+  recommendation: [2, 3]
+  ask: [1, 2]
+templateMapping:
+  situation: [cover, content-split]
+  findings: [hero-metric, three-cards, comparison-table]
+  recommendation: [content-split, detail-two-col]
+  ask: [summary]
+contentTypes:
+  situation: [text, quote]
+  findings: [KPI, diagram, table]
+  recommendation: [text, diagram]
+  ask: [text]
+layoutPolicy:
+  preferred:
+    - single-focus
+    - two-cols-asymmetric
+    - hero-top
+  avoid:
+    - mixed-grid
+    - three-cols
+styleRules:
+  maxBulletsPerSlide: 4
+  allowCodeBlocks: false
+  maxVisualEffectsPerSlide: 1
+  emphasisStyle: bold-metrics

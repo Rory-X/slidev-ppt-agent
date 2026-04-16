@@ -1,0 +1,60 @@
+{
+  "name": "warm-creative",
+  "description": "Warm, approachable palette for training sessions and workshops",
+  "color": {
+    "background": "#1C1917",
+    "surface": "#292524",
+    "surfaceHover": "#3B3633",
+    "border": "rgba(255,255,255,0.10)",
+    "primary": "#F59E0B",
+    "secondary": "#EC4899",
+    "accentWarm": "#F97316",
+    "success": "#22C55E",
+    "danger": "#EF4444",
+    "textPrimary": "#FAFAF9",
+    "textSecondary": "#A8A29E",
+    "textMuted": "#78716C"
+  },
+  "typography": {
+    "fontDisplay": "Nunito Sans, system-ui, sans-serif",
+    "fontBody": "Nunito Sans, system-ui, sans-serif",
+    "fontMono": "Fira Code, monospace",
+    "scale": {
+      "display": "2.5rem",
+      "h1": "1.75rem",
+      "h2": "1.25rem",
+      "body": "0.95rem",
+      "caption": "0.75rem"
+    },
+    "weight": { "normal": 400, "bold": 700 }
+  },
+  "spacing": {
+    "cardPadding": "24px",
+    "cardGap": "22px",
+    "sectionBarWidth": "4px",
+    "safeMargin": "40px"
+  },
+  "shape": {
+    "borderRadius": "16px",
+    "borderWidth": "1px"
+  },
+  "shadow": {
+    "card": "0 4px 20px rgba(0,0,0,0.22)",
+    "elevated": "0 12px 36px rgba(0,0,0,0.3)"
+  },
+  "motion": {
+    "maxRevealPerSlide": 2,
+    "transition": "slide-left",
+    "duration": {
+      "fast": "0.2s",
+      "normal": "0.35s",
+      "slow": "0.5s"
+    },
+    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "narrativePacing": {
+      "setup": "slow",
+      "evidence": "fast",
+      "resolution": "normal"
+    }
+  }
+}

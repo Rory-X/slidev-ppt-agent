@@ -1,0 +1,39 @@
+name: training-workshop
+description: Hands-on training or workshop session. Structured around learning objectives, conceptual foundations, live demonstrations, practice exercises, and recap. Designed for active learner engagement.
+recommendedToken: warm-creative
+narrativePhases:
+  - objective
+  - concept
+  - demo
+  - practice
+  - recap
+phaseSlideRange:
+  objective: [1, 2]
+  concept: [3, 5]
+  demo: [3, 6]
+  practice: [2, 3]
+  recap: [1, 2]
+templateMapping:
+  objective: [cover, content-split]
+  concept: [detail-two-col, three-cards, content-split]
+  demo: [code-showcase, image-showcase, content-split]
+  practice: [faq, detail-two-col]
+  recap: [summary, three-cards]
+contentTypes:
+  objective: [text, quote]
+  concept: [text, diagram, table]
+  demo: [code, screenshot, diagram]
+  practice: [text, code, checklist]
+  recap: [text, KPI]
+layoutPolicy:
+  preferred:
+    - two-cols-asymmetric
+    - single-focus
+    - three-cols
+  avoid:
+    - hero-top
+styleRules:
+  maxBulletsPerSlide: 5
+  allowCodeBlocks: true
+  maxVisualEffectsPerSlide: 2
+  emphasisStyle: step-by-step

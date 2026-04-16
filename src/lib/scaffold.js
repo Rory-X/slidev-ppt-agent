@@ -12,6 +12,7 @@ import { logStep, log } from '../utils.js';
 export function copyAssets(targetDir) {
   const mapping = [
     { src: 'skills', dest: '.agents/skills' },
+    { src: 'agents', dest: '.agents/agents' },
     { src: 'design-system', dest: 'design-system' },
     { src: 'schemas', dest: 'schemas' },
     { src: 'scripts', dest: 'scripts' },
@@ -56,7 +57,7 @@ export function renderTemplates(targetDir, data, platforms) {
 
 export function computeFileHashes(targetDir) {
   const hashMap = {};
-  const coreDirs = ['.agents/skills', 'design-system', 'schemas', 'scripts'];
+  const coreDirs = ['.agents/skills', '.agents/agents', 'design-system', 'schemas', 'scripts'];
 
   for (const dir of coreDirs) {
     const fullDir = join(targetDir, dir);

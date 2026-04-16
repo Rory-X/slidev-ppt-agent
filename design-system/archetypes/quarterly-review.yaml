@@ -1,0 +1,36 @@
+name: quarterly-review
+description: Periodic business review summarizing quarter highlights, key metrics, challenges encountered, and plans for the next quarter. Data-driven with clear trend narratives.
+recommendedToken: corporate-blue
+narrativePhases:
+  - highlights
+  - metrics
+  - challenges
+  - next-quarter
+phaseSlideRange:
+  highlights: [1, 2]
+  metrics: [3, 5]
+  challenges: [2, 3]
+  next-quarter: [1, 2]
+templateMapping:
+  highlights: [cover, three-cards]
+  metrics: [hero-metric, metrics-strip, comparison-table, detail-two-col]
+  challenges: [three-cards, content-split]
+  next-quarter: [summary, content-split]
+contentTypes:
+  highlights: [text, KPI]
+  metrics: [KPI, chart, table, diagram]
+  challenges: [text, diagram]
+  next-quarter: [text, checklist]
+layoutPolicy:
+  preferred:
+    - hero-top
+    - two-cols-symmetric
+    - single-focus
+  avoid:
+    - mixed-grid
+    - dense-code-layout
+styleRules:
+  maxBulletsPerSlide: 5
+  allowCodeBlocks: false
+  maxVisualEffectsPerSlide: 1
+  emphasisStyle: bold-metrics

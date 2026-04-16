@@ -7,6 +7,8 @@ description: Create and present web-based slidedecks for developers using Slidev
 
 Web-based slides maker built on Vite, Vue, and Markdown.
 
+Compatible with @slidev/cli ^52.0.0
+
 ## When to Use
 
 - Technical presentations or slidedecks with live code examples
@@ -20,13 +22,13 @@ Web-based slides maker built on Vite, Vue, and Markdown.
 ## Quick Start
 
 ```bash
-pnpm create slidev    # Create project
-pnpm run dev          # Start dev server (opens http://localhost:3030)
-pnpm run build        # Build static SPA
-pnpm run export       # Export to PDF (requires playwright-chromium)
+npx create-slidev     # Create project
+npx slidev            # Start dev server (opens http://localhost:3030)
+npx slidev build      # Build static SPA
+npx slidev export     # Export to PDF (requires playwright-chromium)
 ```
 
-**Verify**: After `pnpm run dev`, confirm slides load at `http://localhost:3030`. After `pnpm run export`, check the output PDF exists in the project root.
+**Verify**: After `npx slidev`, confirm slides load at `http://localhost:3030`. After `npx slidev export`, check the output PDF exists in the project root.
 
 ## Role in PPT Harness
 
@@ -159,7 +161,7 @@ Presenter notes go here
 | OG image | `seoMeta.ogImage` or `og-image.png` | [build-og-image](references/build-og-image.md) |
 | SEO tags | `seoMeta:` | [build-seo-meta](references/build-seo-meta.md) |
 
-**Export prerequisite**: `pnpm add -D playwright-chromium` is required for PDF/PPTX/PNG export. If export fails with a browser error, install this dependency first.
+**Export prerequisite**: `npm install -D playwright-chromium` is required for PDF/PPTX/PNG export. If export fails with a browser error, install this dependency first.
 
 ### Editor & Tools
 
@@ -224,9 +226,9 @@ After generating ALL slides, mentally verify each slide against these rules:
 1. Count bullet points — over 6? Split.
 2. Count code lines — over 12? Add maxHeight or split.
 3. Any Mermaid without explicit scale? Add `{scale: 0.5}`. In two-col? Use `{scale: 0.35}`.
-6. Mermaid with >8 nodes sharing a slide with other content? Move to dedicated slide.
-4. Two-col slide with code on both sides? Almost certainly overflows — simplify.
-5. Table with >6 rows? Split.
+4. Mermaid with >8 nodes sharing a slide with other content? Move to dedicated slide.
+5. Two-col slide with code on both sides? Almost certainly overflows — simplify.
+6. Table with >6 rows? Split.
 
 See [content-overflow-prevention](references/content-overflow-prevention.md) for detailed examples.
 

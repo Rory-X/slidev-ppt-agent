@@ -1,37 +1,109 @@
-/* ===== Dark mode (default) ===== */
+/* ==========================================================================
+   Global Token CSS Custom Properties
+   Maps 1:1 to JSON token files in design-system/tokens/*.json
+   Default values use tech-minimal.json; override per-theme as needed.
+   ========================================================================== */
+
+/* ===== Dark mode (default — matches tech-minimal.json) ===== */
 :root,
 html.dark {
-  --ppt-bg: #0B1020;
-  --ppt-surface: rgba(255, 255, 255, 0.04);
+  /* color.background */
+  --ppt-bg: #0B1120;
+  /* color.surface */
+  --ppt-surface: #131A2E;
+  /* color.surfaceHover */
+  --ppt-surface-hover: #1A2340;
+  /* color.border */
   --ppt-border: rgba(255, 255, 255, 0.08);
-  --ppt-radius: 14px;
-  --ppt-primary: #2DD4BF;
+  /* color.primary */
+  --ppt-primary: #4DA3FF;
+  /* color.secondary */
   --ppt-secondary: #A78BFA;
-  --ppt-text: #FFFFFF;
-  --ppt-text-body: #C7C9D9;
-  --ppt-text-muted: #6B7280;
-  --ppt-icon-bg: rgba(45, 212, 191, 0.12);
+  /* color.accentWarm */
+  --ppt-accent-warm: #F59E0B;
+  /* color.success */
+  --ppt-success: #10B981;
+  /* color.danger */
+  --ppt-danger: #EF4444;
+  /* color.textPrimary */
+  --ppt-text: #F1F5F9;
+  /* color.textSecondary */
+  --ppt-text-body: #94A3B8;
+  /* color.textMuted */
+  --ppt-text-muted: #64748B;
+
+  /* Derived icon backgrounds (12% opacity of primary/secondary) */
+  --ppt-icon-bg: rgba(77, 163, 255, 0.12);
   --ppt-icon-bg-secondary: rgba(167, 139, 250, 0.12);
-  --ppt-card-padding: 24px 28px;
-  --ppt-card-gap: 22px;
-  --ppt-section-bar-width: 3px;
+
+  /* typography.fontDisplay */
+  --ppt-font-display: Inter, system-ui, sans-serif;
+  /* typography.fontBody */
+  --ppt-font-body: Inter, system-ui, sans-serif;
+  /* typography.fontMono */
+  --ppt-font-mono: Fira Code, monospace;
+
+  /* typography.scale */
+  --ppt-text-display: 2.5rem;
+  --ppt-text-h1: 1.75rem;
+  --ppt-text-h2: 1.25rem;
+  --ppt-text-body: 0.95rem;
+  --ppt-text-caption: 0.75rem;
+
+  /* typography.weight */
+  --ppt-weight-normal: 400;
+  --ppt-weight-bold: 700;
+
+  /* spacing */
+  --ppt-card-padding: 24px;
+  --ppt-card-gap: 20px;
+  --ppt-section-bar-width: 4px;
+  --ppt-safe-margin: 40px;
+
+  /* shape */
+  --ppt-radius: 12px;
+  --ppt-border-width: 1px;
+
+  /* shadow */
+  --ppt-shadow-card: 0 4px 24px rgba(0, 0, 0, 0.2);
+  --ppt-shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.3);
+
+  /* motion.duration */
+  --ppt-duration-fast: 0.25s;
+  --ppt-duration-normal: 0.4s;
+  --ppt-duration-slow: 0.6s;
+  /* motion.easing */
+  --ppt-easing: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ===== Light mode ===== */
+/* ===== Light mode (matches mono-editorial.json) ===== */
 html.light {
-  --ppt-bg: #F8FAFC;
-  --ppt-surface: rgba(0, 0, 0, 0.03);
-  --ppt-border: rgba(0, 0, 0, 0.10);
-  --ppt-primary: #0D9488;
-  --ppt-secondary: #7C3AED;
-  --ppt-text: #1E293B;
-  --ppt-text-body: #475569;
-  --ppt-text-muted: #94A3B8;
-  --ppt-icon-bg: rgba(13, 148, 136, 0.10);
-  --ppt-icon-bg-secondary: rgba(124, 58, 237, 0.10);
+  --ppt-bg: #FAFAFA;
+  --ppt-surface: #FFFFFF;
+  --ppt-surface-hover: #F4F4F5;
+  --ppt-border: rgba(0, 0, 0, 0.08);
+  --ppt-primary: #18181B;
+  --ppt-secondary: #71717A;
+  --ppt-accent-warm: #D97706;
+  --ppt-success: #16A34A;
+  --ppt-danger: #DC2626;
+  --ppt-text: #18181B;
+  --ppt-text-body: #52525B;
+  --ppt-text-muted: #A1A1AA;
+  --ppt-icon-bg: rgba(24, 24, 27, 0.08);
+  --ppt-icon-bg-secondary: rgba(113, 113, 122, 0.08);
+
+  --ppt-font-display: "Source Serif 4", Georgia, serif;
+  --ppt-font-body: "Source Sans 3", system-ui, sans-serif;
+  --ppt-font-mono: "Source Code Pro", monospace;
+
+  --ppt-shadow-card: 0 1px 8px rgba(0, 0, 0, 0.06);
+  --ppt-shadow-elevated: 0 4px 20px rgba(0, 0, 0, 0.10);
 }
 
+/* ===== Base resets ===== */
 html, body, #page-root {
   background: var(--ppt-bg) !important;
   color: var(--ppt-text-body);
+  font-family: var(--ppt-font-body);
 }

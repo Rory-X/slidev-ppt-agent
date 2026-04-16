@@ -1,0 +1,35 @@
+name: research-readout
+description: Research findings presentation covering background context, methodology, detailed findings, and actionable implications. Evidence-heavy with rigorous data backing.
+recommendedToken: tech-minimal
+narrativePhases:
+  - background
+  - methodology
+  - findings
+  - implications
+phaseSlideRange:
+  background: [1, 2]
+  methodology: [2, 3]
+  findings: [4, 7]
+  implications: [2, 3]
+templateMapping:
+  background: [cover, content-split]
+  methodology: [content-split, detail-two-col]
+  findings: [detail-two-col, hero-metric, three-cards, comparison-table]
+  implications: [content-split, summary]
+contentTypes:
+  background: [text, quote]
+  methodology: [text, diagram, table]
+  findings: [KPI, chart, table, diagram, code]
+  implications: [text, diagram, checklist]
+layoutPolicy:
+  preferred:
+    - two-cols-asymmetric
+    - single-focus
+    - three-cols
+  avoid:
+    - mixed-grid
+styleRules:
+  maxBulletsPerSlide: 6
+  allowCodeBlocks: true
+  maxVisualEffectsPerSlide: 2
+  emphasisStyle: data-first

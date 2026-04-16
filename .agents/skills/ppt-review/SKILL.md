@@ -63,6 +63,54 @@ For each slide, check the following categories:
 - [ ] No placeholder text remaining
 - [ ] Claims backed by research evidence
 
+### 7. Narrative & Structure
+
+- [ ] CTA (Call to Action) exists on final or near-final slide
+- [ ] Red thread: each slide's key_message logically connects to next
+- [ ] Terminology matches audience level (no unexplained jargon for non-technical audience)
+- [ ] Outline key_messages are reflected in actual slide content (compare with outline.json)
+- [ ] Story arc follows archetype's narrativePhases progression
+
+### 8. Factual Accuracy
+
+- [ ] Spot-check 3 data claims: find the evidence_ref in presenter notes, trace back to research-report.md finding ID
+- [ ] No unsourced statistics or percentages
+- [ ] Dates and version numbers are current (not outdated)
+- [ ] Company/product names are spelled correctly
+
+### 9. Design System Compliance
+
+- [ ] Headmatter imports `global-tokens.css` and `page-classes.css`
+- [ ] No raw hex color values (all colors via CSS variables `var(--ppt-*)`)
+- [ ] No raw Tailwind color classes (e.g., `text-blue-500`) -- use `var(--ppt-primary)` instead
+- [ ] Page-classes used where appropriate (`.glass-card`, `.icon-box`, `.section-bar`, etc.)
+- [ ] Font sizes use design system scale (`.ppt-h1` through `.ppt-caption`)
+
+### 10. Accessibility
+
+- [ ] Text contrast meets 4.5:1 minimum against backgrounds
+- [ ] Images/diagrams have descriptive alt-text or presenter note description
+- [ ] Animation count per slide <= 2 (from token maxRevealPerSlide)
+- [ ] v-motion initial positions are within visible canvas area
+- [ ] Content is fully readable in PDF export (no information lost to animation sequence)
+
+### 11. Animation Compliance
+
+- [ ] v-mark colors match token accent palette (not arbitrary colors)
+- [ ] magic-move has <= 3 steps, each step's code diff <= 30%
+- [ ] frontmatter `transition:` follows the decision tree in animation-strategy.md
+- [ ] Presenter notes `[click]` count matches page's v-click count
+- [ ] Adjacent slides use different transitions (no repeated transition)
+
+## Rebuild Checklist
+
+After applying fixes:
+
+1. List all changes made (slide number + what was fixed)
+2. Rebuild: `npx slidev build`
+3. Re-run review on fixed slides to confirm PASS
+4. Return updated preview URL
+
 ## Process
 
 1. Read the `slides-<topic>.md` file.

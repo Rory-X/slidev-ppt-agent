@@ -113,3 +113,98 @@ Global constraints:
 - Colors and fonts match the selected token set (mandatory)
 - Animation fits the page scenario
 - Bilingual headings where appropriate (Chinese main + English subtitle)
+
+## Active Page Splitting
+
+When outline indicates a page with high density:
+- **> 6 bullet points**: MUST split into 2 slides (Part 1/Part 2 with continued title)
+- **> 12 lines of code**: MUST split or use `maxHeight: '300px'` with scroll
+- **> 8 Mermaid nodes**: MUST use dedicated full-width slide
+- **Code + Diagram on same page**: FORBIDDEN. Move one to next slide.
+
+## Image Usage Rules
+
+- Max height: 60% of canvas (330px on 552px canvas)
+- Always use `object-fit: cover` for background images
+- Every image must have alt-text in presenter notes: `<!-- alt: description of image -->`
+- Prefer Unsplash URLs for stock imagery; never use broken/placeholder URLs
+- For diagrams: use `.diagram-container` class for consistent sizing
+
+## Table Overflow Rules
+
+- **> 5 rows OR > 4 columns**: apply `text-sm` or `text-xs` class
+- **> 8 rows**: MUST split into multiple slides or simplify
+- **Wide tables** (> 4 columns with long text): consider transposing or using comparison cards instead
+- Always wrap tables in `.ppt-table` class for consistent styling
+
+## One-Focus-Per-Page Principle
+
+Each slide has exactly ONE visual heavyweight:
+- ONE code block, OR
+- ONE diagram/Mermaid, OR
+- ONE large metric/number, OR
+- ONE comparison table, OR
+- ONE quote block
+
+Combining two heavyweights (e.g., code + diagram) is FORBIDDEN. Light elements (short text, bullet list <= 4 items, small icon) can accompany the heavyweight.
+
+## Design System Enforcement
+
+**Headmatter** (first slide's frontmatter) MUST include:
+```yaml
+css:
+  - design-system/styles/global-tokens.css
+  - design-system/styles/page-classes.css
+  - design-system/styles/animation-presets.css
+```
+
+**Color rules**:
+- FORBIDDEN: raw hex values (`#4DA3FF`), Tailwind color classes (`text-blue-500`, `bg-green-100`)
+- REQUIRED: CSS variables (`var(--ppt-primary)`, `var(--ppt-surface)`, `var(--ppt-text-secondary)`)
+
+**Typography rules**:
+- Use design system classes: `.ppt-h1`, `.ppt-h2`, `.ppt-body`, `.ppt-caption`
+- Or CSS variables: `font-size: var(--ppt-text-h1)`
+
+## Animation Feature Selection Guide
+
+Choose the right animation mechanism for each content type:
+
+| Content Type | Mechanism | When to Use |
+|-------------|-----------|-------------|
+| Sequential list | `v-clicks` | List has > 3 items and order matters |
+| Code evolution | `magic-move` | Showing code transformation (max 3 steps) |
+| Key emphasis | `v-mark` | Highlighting a specific word/phrase during talk |
+| Element entrance | `v-motion` | Hero element on focal slide (sparingly) |
+| Content toggle | `v-switch` | Before/after comparison on same slide |
+| Simple reveal | `v-click` | Any block needing click-to-show (max 2 per page) |
+
+## magic-move Rules
+
+- ONLY on code showcase pages
+- Max 3 transformation steps
+- Each step's code diff should be <= 30% changed lines
+- Always set language explicitly in fence
+
+## v-mark Color Constraints
+
+Only use colors that match token accent palette:
+- `v-mark.underline.orange` (maps to --ppt-accent-warm)
+- `v-mark.circle.green` (maps to --ppt-success)
+- `v-mark.highlight.red` (maps to --ppt-danger)
+
+Do NOT use arbitrary colors like `v-mark.underline.pink`.
+
+## Presenter Notes Requirements
+
+Every slide MUST have presenter notes in HTML comments:
+```html
+<!-- 
+Speaker notes for this slide.
+[click] First reveal point discussion.
+[click] Second reveal point discussion.
+Evidence: F3, F7 (from research-report.md)
+-->
+```
+- `[click]` markers must match the number of v-click/v-clicks on the page
+- Evidence refs trace back to research finding IDs

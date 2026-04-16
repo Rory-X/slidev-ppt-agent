@@ -1,32 +1,60 @@
 {
   "name": "pitch-modern",
-  "description": "High-impact pitch style for business storytelling and product demos.",
-  "palette": {
+  "description": "High-impact pitch style for business storytelling and product demos",
+  "color": {
     "background": "#0F0C29",
     "surface": "#1A163A",
-    "primary": "#8B5CF6",
-    "secondary": "#22D3EE",
+    "surfaceHover": "#241E4A",
+    "border": "rgba(255,255,255,0.10)",
+    "primary": "#2DD4BF",
+    "secondary": "#A78BFA",
+    "accentWarm": "#FB7185",
+    "success": "#34D399",
+    "danger": "#F87171",
     "textPrimary": "#FFFFFF",
     "textSecondary": "#C7C9D9",
-    "accent": "#FB7185"
+    "textMuted": "#8B8FA3"
   },
   "typography": {
-    "titleFont": "Noto Sans SC",
-    "bodyFont": "Noto Sans SC",
-    "monoFont": "Fira Code",
-    "titleWeight": 800,
-    "bodyWeight": 400
+    "fontDisplay": "Noto Serif SC, serif",
+    "fontBody": "Noto Sans SC, system-ui, sans-serif",
+    "fontMono": "Fira Code, monospace",
+    "scale": {
+      "display": "2.5rem",
+      "h1": "1.75rem",
+      "h2": "1.25rem",
+      "body": "0.95rem",
+      "caption": "0.75rem"
+    },
+    "weight": { "normal": 400, "bold": 800 }
   },
   "spacing": {
-    "gridGap": 24,
-    "sectionPadding": 30
+    "cardPadding": "28px",
+    "cardGap": "24px",
+    "sectionBarWidth": "4px",
+    "safeMargin": "40px"
   },
   "shape": {
-    "cardRadius": 20,
-    "cardBorderWidth": 1
+    "borderRadius": "20px",
+    "borderWidth": "1px"
+  },
+  "shadow": {
+    "card": "0 4px 24px rgba(0,0,0,0.25)",
+    "elevated": "0 16px 48px rgba(0,0,0,0.35)"
   },
   "motion": {
     "maxRevealPerSlide": 2,
-    "transition": "fade-out"
+    "transition": "fade-out",
+    "duration": {
+      "fast": "0.2s",
+      "normal": "0.35s",
+      "slow": "0.5s"
+    },
+    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "narrativePacing": {
+      "setup": "slow",
+      "evidence": "normal",
+      "resolution": "fast"
+    }
   }
 }

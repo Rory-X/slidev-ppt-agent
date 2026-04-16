@@ -1,0 +1,40 @@
+name: product-launch
+description: Product launch or feature announcement presentation. Builds from problem framing through vision and solution to a live demo and pricing call-to-action. Balances storytelling with tangible proof.
+recommendedToken: pitch-modern
+narrativePhases:
+  - problem
+  - vision
+  - solution
+  - demo
+  - pricing-cta
+phaseSlideRange:
+  problem: [1, 2]
+  vision: [1, 2]
+  solution: [2, 4]
+  demo: [2, 4]
+  pricing-cta: [1, 2]
+templateMapping:
+  problem: [content-split, hero-metric]
+  vision: [image-showcase, cover]
+  solution: [detail-two-col, three-cards, content-split]
+  demo: [code-showcase, image-showcase, content-split]
+  pricing-cta: [comparison-table, summary]
+contentTypes:
+  problem: [text, quote, KPI]
+  vision: [text, image]
+  solution: [text, diagram, screenshot]
+  demo: [code, screenshot, diagram]
+  pricing-cta: [table, text]
+layoutPolicy:
+  preferred:
+    - hero-top
+    - two-cols-asymmetric
+    - single-focus
+  avoid:
+    - dense-code-layout
+    - three-cols
+styleRules:
+  maxBulletsPerSlide: 4
+  allowCodeBlocks: true
+  maxVisualEffectsPerSlide: 2
+  emphasisStyle: visual-impact
