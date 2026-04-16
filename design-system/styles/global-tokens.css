@@ -1,0 +1,20 @@
+:root {
+  --ppt-bg: #0B1020;
+  --ppt-surface: rgba(255, 255, 255, 0.04);
+  --ppt-border: rgba(255, 255, 255, 0.08);
+  --ppt-radius: 14px;
+  --ppt-primary: #2DD4BF;
+  --ppt-secondary: #A78BFA;
+  --ppt-text: #FFFFFF;
+  --ppt-text-body: #C7C9D9;
+  --ppt-text-muted: #6B7280;
+  --ppt-icon-bg: rgba(45, 212, 191, 0.12);
+  --ppt-icon-bg-secondary: rgba(167, 139, 250, 0.12);
+  --ppt-card-padding: 24px 28px;
+  --ppt-card-gap: 22px;
+  --ppt-section-bar-width: 3px;
+}
+
+html, body, #page-root {
+  background: var(--ppt-bg) !important;
+}

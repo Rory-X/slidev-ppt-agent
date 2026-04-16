@@ -1,0 +1,103 @@
+---
+description: Orchestrate PPT creation, review, and publishing when user sends /ppt-creator, /ppt-review, or /ppt-publish commands
+alwaysApply: true
+---
+
+# PPT Harness Command Orchestrator
+
+When the user message starts with `/ppt-creator`, `/ppt-review`, or `/ppt-publish`, execute the corresponding workflow below. You are the orchestrator -- you drive each phase yourself using the skills and tools available.
+
+## `/ppt-creator <requirement>`
+
+Execute these phases in order. Each phase produces artifacts. Do NOT skip phases.
+
+### Phase 1: Clarify (conditional)
+
+Check if the requirement covers these dimensions:
+- **Audience** (who will watch)
+- **Scenario** (where/when presented)
+- **Goal** (what action after watching)
+- **Materials** (references, links, or notes -- optional but helpful)
+
+If all present: proceed directly.
+If any missing: ask concise follow-up questions, then proceed.
+
+### Phase 2: Deep Research
+
+Follow `.agents/skills/ppt-research/SKILL.md`:
+- WebSearch at least 3 dimensions (industry, competitors, audience focus, counter-arguments, tech reality)
+- Integrate user-provided materials
+- Write `research-report.md` to artifacts directory
+
+### Phase 3: Style Decision
+
+Follow `.agents/skills/ppt-design-director/SKILL.md`:
+- Read `design-system/archetypes/`, `design-system/tokens/`, `design-system/reference-style.md`
+- Match archetype + token set based on research + brief
+- Write `style-plan.md` to artifacts directory
+
+### Phase 4: Outline Generation
+
+Follow `.agents/skills/ppt-outline-architect/SKILL.md`:
+- Apply Pyramid Principle with research context
+- Output JSON outline wrapped in `[PPT_OUTLINE]` / `[/PPT_OUTLINE]`
+- Save as `outline.json`
+- Run `node scripts/validate-outline.js` to verify
+
+### Phase 5: Slides Composition
+
+Follow `.agents/skills/ppt-slide-composer/SKILL.md`:
+- Read outline, style plan, page-templates, CSS design system
+- Write `slides-<topic>.md` using Slidev markdown
+- Follow `.agents/skills/slidev/SKILL.md` for syntax and overflow rules
+- Apply Bento Grid layout principles and animation strategy
+- Import `design-system/styles/global-tokens.css` and `design-system/styles/page-classes.css` in the deck
+
+### Phase 6: Preview
+
+Follow `.agents/skills/ppt-preview/SKILL.md`:
+- Build: `npx slidev build <slides-file> --out <artifact-dir>/site`
+- Serve: `node scripts/static-preview-server.js --dir=<artifact-dir>/site --port=3045`
+- Return the preview URL to the user
+
+### Phase 7: Deliver & Offer Review
+
+After preview URL is returned:
+- Ask the user: "是否需要运行质量审查？你也可以稍后用 `/ppt-review` 手动触发。"
+- If user chooses yes: follow `.agents/skills/ppt-review/SKILL.md`, fix issues, rebuild
+- If user chooses no or does not respond: skip review, deliver as-is
+
+### Output Format
+
+After all phases complete, respond with:
+- Artifact directory path
+- Preview URL (clickable)
+- Key files: research-report.md, style-plan.md, outline.json, slides-<topic>.md
+
+---
+
+## `/ppt-review [slides-file]`
+
+Follow `.agents/skills/ppt-review/SKILL.md`:
+- If `slides-file` is provided, review that specific file
+- If not provided, review the most recently generated slides in the artifacts directory
+- Run full checklist, fix issues, rebuild preview, return updated URL
+
+---
+
+## `/ppt-publish [target]`
+
+Follow `.agents/skills/ppt-publish/SKILL.md`:
+- If `target` is specified (`vercel` or `github-pages`): publish directly
+- If `target` is missing: ask the user to choose
+- Return the live site URL
+
+---
+
+## Gate Rules
+
+- Phase N cannot start until Phase N-1 artifact exists
+- Never fabricate research data -- use WebSearch
+- Never skip outline validation
+- Always return a preview URL after Phase 6
+- Never publish without explicit user request

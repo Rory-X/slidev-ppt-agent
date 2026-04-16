@@ -1,0 +1,32 @@
+{
+  "name": "tech-minimal",
+  "description": "Calm technical presentation for architecture and engineering talks.",
+  "palette": {
+    "background": "#0B1020",
+    "surface": "#131A2E",
+    "primary": "#4DA3FF",
+    "secondary": "#2DD4BF",
+    "textPrimary": "#E6ECFF",
+    "textSecondary": "#A8B3CF",
+    "accent": "#F59E0B"
+  },
+  "typography": {
+    "titleFont": "Noto Sans SC",
+    "bodyFont": "Noto Sans SC",
+    "monoFont": "Fira Code",
+    "titleWeight": 700,
+    "bodyWeight": 400
+  },
+  "spacing": {
+    "gridGap": 20,
+    "sectionPadding": 28
+  },
+  "shape": {
+    "cardRadius": 16,
+    "cardBorderWidth": 1
+  },
+  "motion": {
+    "maxRevealPerSlide": 2,
+    "transition": "slide-left"
+  }
+}

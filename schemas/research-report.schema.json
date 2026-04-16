@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ppt-harness.local/schemas/research-report.schema.json",
+  "title": "Research Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "topic",
+    "dimensions",
+    "findings",
+    "recommendation",
+    "generatedAt"
+  ],
+  "properties": {
+    "topic": {
+      "type": "string"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "market",
+          "competitors",
+          "audienceFocus",
+          "counterArguments",
+          "technologyReality"
+        ]
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "reference"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "web",
+              "user-material",
+              "internal-note"
+            ]
+          },
+          "reference": {
+            "type": "string"
+          },
+          "credibility": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "findings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dimension",
+          "insight",
+          "evidence"
+        ],
+        "properties": {
+          "dimension": {
+            "type": "string"
+          },
+          "insight": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "risk": {
+            "type": "string"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "narrativeAngle",
+        "styleDirection"
+      ],
+      "properties": {
+        "narrativeAngle": {
+          "type": "string"
+        },
+        "styleDirection": {
+          "type": "string"
+        },
+        "rationale": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

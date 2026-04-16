@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ppt-harness.local/schemas/outline.schema.json",
+  "title": "PPT Outline",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "ppt_outline"
+  ],
+  "properties": {
+    "ppt_outline": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cover",
+        "table_of_contents",
+        "parts",
+        "end_page"
+      ],
+      "properties": {
+        "cover": {
+          "$ref": "#/$defs/pageWithSubtitle"
+        },
+        "table_of_contents": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "title",
+            "content"
+          ],
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "content": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "parts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "part_title",
+              "pages"
+            ],
+            "properties": {
+              "part_title": {
+                "type": "string"
+              },
+              "pages": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/page"
+                }
+              }
+            }
+          }
+        },
+        "end_page": {
+          "$ref": "#/$defs/page"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "page": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "content"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "key_message": {
+          "type": "string"
+        },
+        "content": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "pageWithSubtitle": {
+      "allOf": [
+        {
+          "$ref": "#/$defs/page"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "sub_title": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

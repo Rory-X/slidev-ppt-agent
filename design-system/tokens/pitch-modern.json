@@ -1,0 +1,32 @@
+{
+  "name": "pitch-modern",
+  "description": "High-impact pitch style for business storytelling and product demos.",
+  "palette": {
+    "background": "#0F0C29",
+    "surface": "#1A163A",
+    "primary": "#8B5CF6",
+    "secondary": "#22D3EE",
+    "textPrimary": "#FFFFFF",
+    "textSecondary": "#C7C9D9",
+    "accent": "#FB7185"
+  },
+  "typography": {
+    "titleFont": "Noto Sans SC",
+    "bodyFont": "Noto Sans SC",
+    "monoFont": "Fira Code",
+    "titleWeight": 800,
+    "bodyWeight": 400
+  },
+  "spacing": {
+    "gridGap": 24,
+    "sectionPadding": 30
+  },
+  "shape": {
+    "cardRadius": 20,
+    "cardBorderWidth": 1
+  },
+  "motion": {
+    "maxRevealPerSlide": 2,
+    "transition": "fade-out"
+  }
+}

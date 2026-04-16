@@ -1,0 +1,77 @@
+.glass-card {
+  background: var(--ppt-surface);
+  border: 1px solid var(--ppt-border);
+  border-radius: var(--ppt-radius);
+  padding: var(--ppt-card-padding);
+}
+
+.icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--ppt-icon-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ppt-primary);
+  flex-shrink: 0;
+}
+
+.icon-box--secondary {
+  background: var(--ppt-icon-bg-secondary);
+  color: var(--ppt-secondary);
+}
+
+.section-bar {
+  border-left: var(--ppt-section-bar-width) solid var(--ppt-primary);
+  padding-left: 16px;
+}
+
+.tag-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  background: rgba(45, 212, 191, 0.15);
+  color: var(--ppt-primary);
+}
+
+.tag-badge--secondary {
+  background: rgba(167, 139, 250, 0.15);
+  color: var(--ppt-secondary);
+}
+
+.gradient-title {
+  background: linear-gradient(120deg, var(--ppt-primary), var(--ppt-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bilingual-heading {
+  display: flex;
+  flex-direction: column;
+}
+.bilingual-heading .zh {
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+.bilingual-heading .en {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  color: var(--ppt-text-muted);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.accent-text {
+  color: var(--ppt-primary);
+  font-weight: 600;
+}
+
+.divider-line {
+  width: 64px;
+  height: 2px;
+  background: var(--ppt-primary);
+  margin: 0 auto;
+}

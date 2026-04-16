@@ -1,0 +1,29 @@
+node_modules/
+dist/
+artifacts/
+.vercel/
+*.log
+.DS_Store
+screenshots/
+
+# User PPT content (not part of harness)
+slides*.md
+*.pdf
+*.py
+
+# Generated validation artifacts
+*-validation.json
+brief.json
+outline.json
+style-plan.md
+research-report.md
+
+# Legacy V1 artifacts
+commands/
+adapters/
+docs/
+prompts/
+
+# Platform symlink dirs (auto-generated)
+.claude/skills/
+.codebuddy/

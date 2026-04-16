@@ -1,0 +1,42 @@
+/*
+  Animation presets for Slidev slides.
+  These are CSS-level helpers; actual reveal behavior uses
+  Slidev's v-click / v-clicks directives in markdown.
+
+  This file documents the intended animation strategy per page type
+  so the slide-composer skill can reference it.
+*/
+
+/*
+  === Animation Strategy by Page Type ===
+
+  Cover:        transition: fade-out | no v-click
+  TOC:          transition: fade-out | v-clicks on each card
+  Content-split: transition: slide-left | left first, right v-click
+  Three-cards:  transition: slide-left | v-clicks left-to-right
+  Detail-two-col: transition: slide-left | together or left-right step
+  Code-showcase: transition: slide-left | line highlight + right cards v-click
+  Summary:      transition: fade-out | v-clicks on recap cards, closing together
+
+  === Global Constraints ===
+
+  - Max 2 reveal effects per slide
+  - Adjacent slides should NOT share the same transition
+  - Section dividers: fade
+  - Content slides: slide-left
+*/
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out both;
+}

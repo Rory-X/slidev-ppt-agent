@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ppt-harness.local/schemas/page-requirements.schema.json",
+  "title": "Page Requirements",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "totalPages",
+    "includeCover",
+    "includeToc",
+    "includeEndPage"
+  ],
+  "properties": {
+    "totalPages": {
+      "type": "integer",
+      "minimum": 5,
+      "maximum": 80
+    },
+    "includeCover": {
+      "type": "boolean",
+      "default": true
+    },
+    "includeToc": {
+      "type": "boolean",
+      "default": true
+    },
+    "includeEndPage": {
+      "type": "boolean",
+      "default": true
+    },
+    "sectionAllocations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "section",
+          "pages"
+        ],
+        "properties": {
+          "section": {
+            "type": "string",
+            "minLength": 2
+          },
+          "pages": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    }
+  }
+}

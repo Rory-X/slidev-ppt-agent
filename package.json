@@ -1,0 +1,23 @@
+{
+  "name": "a2a-protocol-share",
+  "private": true,
+  "scripts": {
+    "dev": "slidev --open",
+    "dev:agent-team": "slidev --open slides-agent-team.md",
+    "dev:pitch": "slidev --open slides-pitch-demo.md",
+    "build:a2a": "slidev build slides.md --base /a2a/ --out dist/a2a",
+    "build:agent-team": "slidev build slides-agent-team.md --base /agent-team/ --out dist/agent-team",
+    "build:pitch": "slidev build slides-pitch-demo.md --base /pitch/ --out dist/pitch",
+    "build:landing": "node scripts/build-landing.js",
+    "build": "npm run build:a2a && npm run build:agent-team && npm run build:pitch && npm run build:landing",
+    "export": "slidev export",
+    "ppt:validate:outline": "node scripts/validate-outline.js",
+    "ppt:validate:style": "node scripts/validate-style.js"
+  },
+  "dependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "@slidev/cli": "^52.0.0",
+    "@slidev/theme-default": "^0.25.0",
+    "@slidev/theme-seriph": "latest"
+  }
+}

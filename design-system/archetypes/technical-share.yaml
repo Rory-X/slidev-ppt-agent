@@ -1,0 +1,20 @@
+name: technical-share
+description: Technical architecture or engineering deep-dive presentation.
+recommendedToken: tech-minimal
+narrativePhases:
+  - context-and-problem
+  - solution-principles
+  - architecture-and-flow
+  - implementation-and-risk
+  - roadmap-and-summary
+layoutPolicy:
+  preferred:
+    - two-cols-asymmetric
+    - single-focus
+    - three-cols
+  avoid:
+    - mixed-grid
+styleRules:
+  maxVisualEffectsPerSlide: 2
+  maxBulletsPerSlide: 6
+  codeFirstSlidesAllowed: true

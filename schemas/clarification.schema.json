@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ppt-harness.local/schemas/clarification.schema.json",
+  "title": "Clarification State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "requiredDimensions",
+    "missingDimensions",
+    "round"
+  ],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "complete",
+        "needs_clarification"
+      ]
+    },
+    "requiredDimensions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [
+        "audience",
+        "scenarioNarrative",
+        "goalAction",
+        "materials"
+      ]
+    },
+    "missingDimensions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "round": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "prompt"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

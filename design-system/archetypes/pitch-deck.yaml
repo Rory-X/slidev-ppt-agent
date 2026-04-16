@@ -1,0 +1,20 @@
+name: pitch-deck
+description: Business pitch presentation focused on persuasion and conversion.
+recommendedToken: pitch-modern
+narrativePhases:
+  - opportunity
+  - pain-and-urgency
+  - product-and-differentiation
+  - traction-and-business-model
+  - call-to-action
+layoutPolicy:
+  preferred:
+    - hero-top
+    - two-cols-symmetric
+    - mixed-grid
+  avoid:
+    - dense-code-layout
+styleRules:
+  maxVisualEffectsPerSlide: 2
+  maxBulletsPerSlide: 5
+  codeFirstSlidesAllowed: false

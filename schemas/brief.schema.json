@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ppt-harness.local/schemas/brief.schema.json",
+  "title": "PPT Brief",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "topic",
+    "audience",
+    "scenarioNarrative",
+    "goalAction",
+    "durationMinutes",
+    "language",
+    "pageRequirements"
+  ],
+  "properties": {
+    "topic": {
+      "type": "string",
+      "minLength": 3
+    },
+    "audience": {
+      "type": "string",
+      "minLength": 2
+    },
+    "scenarioNarrative": {
+      "type": "string",
+      "minLength": 5
+    },
+    "goalAction": {
+      "type": "string",
+      "minLength": 3
+    },
+    "durationMinutes": {
+      "type": "integer",
+      "minimum": 3,
+      "maximum": 180
+    },
+    "language": {
+      "type": "string",
+      "enum": [
+        "zh-CN",
+        "en-US"
+      ]
+    },
+    "tone": {
+      "type": "string",
+      "enum": [
+        "professional",
+        "persuasive",
+        "educational",
+        "visionary",
+        "neutral"
+      ],
+      "default": "professional"
+    },
+    "brandConstraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "primaryColor": {
+          "type": "string"
+        },
+        "secondaryColor": {
+          "type": "string"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "mustAvoid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "materials": {
+      "type": "array",
+      "description": "User-provided source notes, links, or references.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "value"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "text",
+              "url",
+              "file"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "pageRequirements": {
+      "$ref": "./page-requirements.schema.json"
+    }
+  }
+}
