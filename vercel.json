@@ -1,9 +1,0 @@
-{
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "rewrites": [
-    { "source": "/a2a/(.*)", "destination": "/a2a/index.html" },
-    { "source": "/agent-team/(.*)", "destination": "/agent-team/index.html" },
-    { "source": "/pitch/(.*)", "destination": "/pitch/index.html" }
-  ]
-}

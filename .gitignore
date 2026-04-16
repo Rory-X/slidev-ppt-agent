@@ -27,3 +27,7 @@ prompts/
 # Platform symlink dirs (auto-generated)
 .claude/skills/
 .codebuddy/
+package-lock.json
+AI-PPT-WORKFLOW.md
+OVERFLOW_ANALYSIS.md
+vercel.json
