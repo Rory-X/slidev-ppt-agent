@@ -1,5 +1,7 @@
 # Slidev PPT Agent Harness
 
+[中文文档](README.zh-CN.md)
+
 An agent-driven harness for producing high-quality Slidev presentations. Works with Cursor, Claude Code, Codex, or any LLM agent that can read markdown instructions.
 
 ## How It Works
