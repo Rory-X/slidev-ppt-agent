@@ -7,11 +7,26 @@ This project is an Agent-driven PPT production harness, scaffolded by [slidev-pp
 ```
 .agents/
 ├── skills/     # Knowledge layer: domain expertise per phase
+│   ├── ppt-research/SKILL.md
+│   ├── ppt-design-director/SKILL.md
+│   ├── ppt-outline-architect/SKILL.md
+│   ├── ppt-slide-composer/SKILL.md
+│   ├── ppt-preview/SKILL.md
+│   ├── ppt-review/SKILL.md
+│   ├── ppt-publish/SKILL.md
+│   └── slidev/SKILL.md
 └── agents/     # Execution layer: role definitions with I/O contracts
+    ├── researcher.md
+    ├── designer.md
+    ├── architect.md
+    ├── composer.md
+    ├── reviewer.md
+    └── engineer.md
 ```
 
-**Skill** = domain knowledge ("how to do research") -- pure instructional docs.
-**Agent** = execution role ("I am the researcher, input is brief, output is research-report") -- includes I/O contract, file ownership, parallel strategy.
+**Skill** = domain knowledge ("how to do research", "how to write Slidev") -- pure instructional docs.
+
+**Agent** = execution role ("I am the researcher, I use ppt-research skill, my input is brief, my output is research-report, I can parallelize across dimensions") -- includes I/O contract, file ownership, and parallel strategy.
 
 ## Commands
 
@@ -41,9 +56,84 @@ Publish built deck to static hosting. Ask user to choose target if not specified
 
 ## Orchestration Strategy
 
-The orchestrator SHOULD use subagent dispatch when the platform supports it (Cursor Task tool, Claude Code Agent Teams). When not available, fall back to sequential single-agent execution. Read `.agents/agents/*.md` for each role's parallel strategy.
+### Mode Selection
+
+The orchestrator SHOULD use subagent dispatch when the platform supports it (Cursor Task tool, Claude Code Agent Teams). When not available, fall back to sequential single-agent execution. The pipeline phases and quality standards are the same regardless of mode.
+
+### Phase Dependency Graph
+
+```
+Clarify (orchestrator, never delegate)
+    │
+    ▼
+Research (researcher agent) ─── can parallelize search dimensions
+    │
+    ▼
+Style Decision (designer agent)
+    │
+    ▼
+Outline (architect agent)
+    │
+    ▼
+Compose (composer agent) ─── can parallelize by outline part
+    │
+    ▼
+Preview (engineer agent)
+    │
+    ▼
+Review (reviewer agent) ─── can parallelize by check category
+    │
+    ▼
+Deliver
+```
+
+### Dispatch Rules
+
+1. **Phase 1 (Clarify)**: Always orchestrator. Never delegate -- requires user interaction.
+
+2. **Phase 2 (Research)**: Dispatch to researcher agent.
+   - Read `.agents/agents/researcher.md` for role contract and parallel strategy.
+   - If platform supports parallel subtasks: spawn per-dimension searches.
+   - Wait for all subtasks, then merge into single `research-report.md`.
+
+3. **Phase 3 (Style)**: Dispatch to designer agent. Sequential, depends on `research-report.md`.
+
+4. **Phase 4 (Outline)**: Dispatch to architect agent. Sequential, depends on `research-report.md` + `style-plan.md`.
+
+5. **Phase 5 (Compose)**: Dispatch to composer agent.
+   - Read `.agents/agents/composer.md` for parallel part strategy.
+   - If outline has 3+ parts AND total pages >= 12: parallelize by part.
+   - Orchestrator handles headmatter + cover/TOC/end page merge.
+
+6. **Phase 6 (Preview)**: Dispatch to engineer agent. Sequential.
+
+7. **Phase 7 (Review)**: Dispatch to reviewer agent.
+   - Read `.agents/agents/reviewer.md` for parallel category strategy.
+   - If platform supports: spawn per-category review subtasks.
+
+### Subagent Prompt Template
+
+When dispatching a subagent, the orchestrator MUST include:
+
+```
+You are the [ROLE] agent for this PPT project.
+
+Read your role definition: .agents/agents/[ROLE].md
+Read your skill(s): .agents/skills/[SKILL]/SKILL.md
+
+Your inputs (already exist in workspace):
+- [list of input files with paths]
+
+Your task:
+[specific task description for this phase]
+
+Write your output to: [output file path]
+Return a summary of what you produced.
+```
 
 ### File Ownership Matrix
+
+Prevents write conflicts when subagents run in parallel:
 
 | Agent | Writable | Read-only |
 |-------|----------|-----------|
@@ -58,29 +148,59 @@ The orchestrator SHOULD use subagent dispatch when the platform supports it (Cur
 
 | Agent | Path | Skills | Parallelizable |
 |-------|------|--------|----------------|
-| researcher | `.agents/agents/researcher.md` | ppt-research | Yes: per-dimension |
+| researcher | `.agents/agents/researcher.md` | ppt-research | Yes: per-dimension search |
 | designer | `.agents/agents/designer.md` | ppt-design-director | No |
 | architect | `.agents/agents/architect.md` | ppt-outline-architect | No |
-| composer | `.agents/agents/composer.md` | ppt-slide-composer, slidev | Yes: per-part |
-| reviewer | `.agents/agents/reviewer.md` | ppt-review | Yes: per-category |
+| composer | `.agents/agents/composer.md` | ppt-slide-composer, slidev | Yes: per-outline-part |
+| reviewer | `.agents/agents/reviewer.md` | ppt-review | Yes: per-check-category |
 | engineer | `.agents/agents/engineer.md` | ppt-preview, ppt-publish | No |
+
+## Skills Available
+
+| Skill | Path | Role |
+|-------|------|------|
+| ppt-research | `.agents/skills/ppt-research/` | Deep multi-dimensional research |
+| ppt-design-director | `.agents/skills/ppt-design-director/` | Style/archetype/token selection |
+| ppt-outline-architect | `.agents/skills/ppt-outline-architect/` | Pyramid Principle outline generation |
+| ppt-slide-composer | `.agents/skills/ppt-slide-composer/` | Slidev markdown composition with Bento Grid |
+| ppt-preview | `.agents/skills/ppt-preview/` | Build and local preview |
+| ppt-review | `.agents/skills/ppt-review/` | Quality review checklist + auto-fix |
+| ppt-publish | `.agents/skills/ppt-publish/` | Vercel / GitHub Pages deployment |
+| slidev | `.agents/skills/slidev/` | Slidev syntax, overflow rules, layout reference |
 
 ## Design System Resources
 
 | Resource | Path | Purpose |
 |----------|------|---------|
-| Reference style | `design-system/reference-style.md` | Visual benchmark |
-| Animation strategy | `design-system/animation-strategy.md` | Animation decisions |
+| Reference style | `design-system/reference-style.md` | Visual benchmark (aesthetic baseline) |
+| Animation strategy | `design-system/animation-strategy.md` | Animation best practices and decision framework |
 | Tokens | `design-system/tokens/*.json` | Color/typography/spacing/motion tokens |
-| Archetypes | `design-system/archetypes/*.yaml` | Narrative structures |
-| Page templates | `design-system/page-templates/*.md` | Layout examples |
-| CSS classes | `design-system/styles/*.css` | Importable styles |
-| Layout patterns | `design-system/layouts/bento-patterns.md` | Bento Grid reference |
+| Archetypes | `design-system/archetypes/*.yaml` | Narrative structure templates |
+| Page templates | `design-system/page-templates/*.md` | Visual design language examples |
+| CSS classes | `design-system/styles/*.css` | Importable global styles |
+| Layout patterns | `design-system/layouts/bento-patterns.md` | Bento Grid layout reference |
+
+## Schemas
+
+| Schema | Path | Validates |
+|--------|------|-----------|
+| Brief | `schemas/brief.schema.json` | User input structure |
+| Outline | `schemas/outline.schema.json` | Generated outline |
+| Research | `schemas/research-report.schema.json` | Research report |
+
+## Engineering Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `scripts/static-preview-server.js` | Local static file server with port retry |
+| `scripts/validate-outline.js` | Outline validation (page count + structure) |
+| `scripts/validate-style.js` | Style consistency checks |
 
 ## Core Principles
 
 - Agent does all content work (research, outline, slides, review)
-- Scripts only for engineering tasks (build, serve, deploy, validate)
+- Scripts only for engineering tasks Agent cannot do (build, serve, deploy, validate)
 - Design system defines aesthetic baseline, not creative ceiling
 - Every claim in slides must trace to research evidence
-- Subagent dispatch is optional -- sequential is always valid
+- Subagent dispatch is an optional acceleration, not a requirement
+- All phases work in single-agent sequential mode as fallback

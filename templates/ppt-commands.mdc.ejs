@@ -5,11 +5,13 @@ alwaysApply: true
 
 # PPT Harness Command Orchestrator
 
-When the user message starts with `/ppt-creator`, `/ppt-review`, or `/ppt-publish`, execute the corresponding workflow below. You are the orchestrator -- you drive each phase yourself using the skills and tools available.
+When the user message starts with `/ppt-creator`, `/ppt-review`, or `/ppt-publish`, execute the corresponding workflow below. You are the orchestrator -- you drive each phase using agent roles, skills, and tools available.
+
+Read `AGENTS.md` for the full architecture (skills + agents), orchestration strategy, and file ownership matrix.
 
 ## `/ppt-creator <requirement>`
 
-Execute these phases in order. Each phase produces artifacts. Do NOT skip phases.
+Execute these phases in order. Each phase dispatches to an agent role defined in `.agents/agents/`. Use the Task tool to dispatch subagents when beneficial (parallel dimensions, parts, or review categories). Fall back to sequential execution if subagents are not needed.
 
 ### Phase 1: Clarify (conditional)
 
@@ -24,38 +26,40 @@ If any missing: ask concise follow-up questions, then proceed.
 
 ### Phase 2: Deep Research
 
-Follow `.agents/skills/ppt-research/SKILL.md`:
-- WebSearch at least 3 dimensions (industry, competitors, audience focus, counter-arguments, tech reality)
-- Integrate user-provided materials
+Dispatch to **researcher agent** (`.agents/agents/researcher.md`):
+- Read `.agents/skills/ppt-research/SKILL.md` for methodology
+- WebSearch at least 3 dimensions, assign finding IDs (F1, F2, ...)
+- If beneficial: parallelize dimension searches via Task tool
 - Write `research-report.md` to artifacts directory
 
 ### Phase 3: Style Decision
 
-Follow `.agents/skills/ppt-design-director/SKILL.md`:
-- Read `design-system/archetypes/`, `design-system/tokens/`, `design-system/reference-style.md`
-- Match archetype + token set based on research + brief
+Dispatch to **designer agent** (`.agents/agents/designer.md`):
+- Read `.agents/skills/ppt-design-director/SKILL.md`
+- Read `design-system/archetypes/`, `tokens/`, `reference-style.md`, `animation-strategy.md`
+- Match archetype + token set + animation policy
 - Write `style-plan.md` to artifacts directory
 
 ### Phase 4: Outline Generation
 
-Follow `.agents/skills/ppt-outline-architect/SKILL.md`:
-- Apply Pyramid Principle with research context
-- Output JSON outline wrapped in `[PPT_OUTLINE]` / `[/PPT_OUTLINE]`
-- Save as `outline.json`
-- Run `node scripts/validate-outline.js` to verify
+Dispatch to **architect agent** (`.agents/agents/architect.md`):
+- Read `.agents/skills/ppt-outline-architect/SKILL.md`
+- Apply Pyramid Principle, map parts to archetype narrative phases
+- Each page gets `evidence_refs` linking to research finding IDs
+- Save as `outline.json`, run `node scripts/validate-outline.js`
 
 ### Phase 5: Slides Composition
 
-Follow `.agents/skills/ppt-slide-composer/SKILL.md`:
+Dispatch to **composer agent** (`.agents/agents/composer.md`):
+- Read `.agents/skills/ppt-slide-composer/SKILL.md` + `.agents/skills/slidev/SKILL.md`
 - Read outline, style plan, page-templates, CSS design system
-- Write `slides-<topic>.md` using Slidev markdown
-- Follow `.agents/skills/slidev/SKILL.md` for syntax and overflow rules
-- Apply Bento Grid layout principles and animation strategy
-- Import `design-system/styles/global-tokens.css` and `design-system/styles/page-classes.css` in the deck
+- If outline has 3+ parts and >= 12 pages: parallelize by part via Task tool
+- Import `design-system/styles/global-tokens.css` and `page-classes.css` in headmatter
+- Write `slides-<topic>.md`
 
 ### Phase 6: Preview
 
-Follow `.agents/skills/ppt-preview/SKILL.md`:
+Dispatch to **engineer agent** (`.agents/agents/engineer.md`):
 - Build: `npx slidev build <slides-file> --out <artifact-dir>/site`
 - Serve: `node scripts/static-preview-server.js --dir=<artifact-dir>/site --port=3045`
 - Return the preview URL to the user
@@ -64,8 +68,8 @@ Follow `.agents/skills/ppt-preview/SKILL.md`:
 
 After preview URL is returned:
 - Ask the user: "是否需要运行质量审查？你也可以稍后用 `/ppt-review` 手动触发。"
-- If user chooses yes: follow `.agents/skills/ppt-review/SKILL.md`, fix issues, rebuild
-- If user chooses no or does not respond: skip review, deliver as-is
+- If yes: dispatch to **reviewer agent** (`.agents/agents/reviewer.md`), parallelize by category if beneficial
+- If no: deliver as-is
 
 ### Output Format
 
@@ -78,16 +82,19 @@ After all phases complete, respond with:
 
 ## `/ppt-review [slides-file]`
 
-Follow `.agents/skills/ppt-review/SKILL.md`:
+Dispatch to **reviewer agent** (`.agents/agents/reviewer.md`):
+- Read `.agents/skills/ppt-review/SKILL.md`
 - If `slides-file` is provided, review that specific file
-- If not provided, review the most recently generated slides in the artifacts directory
-- Run full checklist, fix issues, rebuild preview, return updated URL
+- If not provided, review the most recently generated slides
+- Run full checklist (overflow, narrative, factual, animation, design-system)
+- Fix issues, rebuild preview, return updated URL
 
 ---
 
 ## `/ppt-publish [target]`
 
-Follow `.agents/skills/ppt-publish/SKILL.md`:
+Dispatch to **engineer agent** (`.agents/agents/engineer.md`):
+- Read `.agents/skills/ppt-publish/SKILL.md`
 - If `target` is specified (`vercel` or `github-pages`): publish directly
 - If `target` is missing: ask the user to choose
 - Return the live site URL
@@ -101,3 +108,4 @@ Follow `.agents/skills/ppt-publish/SKILL.md`:
 - Never skip outline validation
 - Always return a preview URL after Phase 6
 - Never publish without explicit user request
+- Subagent dispatch is optional -- sequential single-agent is always valid

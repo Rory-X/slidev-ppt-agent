@@ -15,7 +15,11 @@
   "scripts": {
     "dev:demo": "slidev --open demo/slides.md",
     "build:demo": "slidev build demo/slides.md --out demo/dist",
-    "lint": "node --check bin/cli.js src/**/*.js"
+    "test": "node --test test/*.test.js",
+    "lint": "node --check bin/cli.js src/**/*.js src/commands/*.js",
+    "sync:assets": "node scripts/sync-assets.cjs",
+    "sync:check": "node scripts/sync-assets.cjs --check",
+    "prepublishOnly": "node scripts/sync-assets.cjs"
   },
   "keywords": [
     "slidev",
@@ -42,6 +46,6 @@
     "@inquirer/prompts": "^7.0.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=22.12.0"
   }
 }

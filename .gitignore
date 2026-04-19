@@ -24,7 +24,7 @@ research-report.md
 .codebuddy/
 
 # Legacy files
-commands/
+/commands/
 adapters/
 docs/
 prompts/
