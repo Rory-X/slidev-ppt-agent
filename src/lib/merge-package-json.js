@@ -5,7 +5,7 @@ import { logStep, logWarn } from '../utils.js';
 const SLIDEV_DEPS = {
   '@slidev/cli': '^52.0.0',
   '@slidev/theme-default': '^0.25.0',
-  '@slidev/theme-seriph': 'latest',
+  '@slidev/theme-seriph': '^0.25.0',
   '@iconify-json/mdi': '^1.2.3',
 };
 

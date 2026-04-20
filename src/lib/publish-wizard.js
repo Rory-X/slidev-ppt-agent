@@ -201,7 +201,10 @@ async function publishViaSubtree(cwd, config, owner, repo) {
 
 function commandExists(cmd) {
   try {
-    execSync(`which ${cmd}`, { stdio: 'pipe' });
+    execSync(
+      process.platform === 'win32' ? `where ${cmd}` : `which ${cmd}`,
+      { stdio: 'pipe' }
+    );
     return true;
   } catch {
     return false;

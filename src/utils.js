@@ -46,3 +46,12 @@ export function logWarn(msg) {
 export function logError(msg) {
   console.error(`  \x1b[31m✗\x1b[0m ${msg}`);
 }
+
+export function checkNodeVersion() {
+  const [major, minor] = process.versions.node.split('.').map(Number);
+  if (major < 22 || (major === 22 && minor < 12)) {
+    logError(`Node.js >=22.12.0 required (current: ${process.version})`);
+    logError('Slidev dependencies (oxc-parser) require this version. Please upgrade Node.js.');
+    process.exit(1);
+  }
+}
