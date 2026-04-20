@@ -77,6 +77,15 @@ After all phases complete, respond with:
 - Artifact directory path
 - Preview URL (clickable)
 - Key files: research-report.md, style-plan.md, outline.json, slides-<topic>.md
+- Export options reminder:
+
+```
+如需导出文件，可以：
+- 导出 PPTX：npx slidev export <slides-file> --format pptx
+- 导出 PDF：npx slidev export <slides-file>
+- 导出 PNG：npx slidev export <slides-file> --format png
+或者告诉我，我帮你执行导出。也可以用 /ppt-publish 发布到线上。
+```
 
 ---
 

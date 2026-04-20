@@ -44,11 +44,29 @@ Produce a complete, high-quality Slidev presentation.
 6. **Preview** -- dispatch to engineer agent, build and serve, return URL
 7. **Review** -- dispatch to reviewer agent, fix issues if found
 
-**Mandatory output**: preview URL + artifact directory path.
+**Mandatory output**: preview URL + artifact directory path + export options reminder.
+
+After delivering the preview URL, always inform the user of export options:
+
+```
+如需导出文件，可以：
+- 导出 PPTX：npx slidev export <slides-file> --format pptx
+- 导出 PDF：npx slidev export <slides-file>
+- 导出 PNG：npx slidev export <slides-file> --format png
+或者告诉我，我帮你执行导出。也可以用 /ppt-publish 发布到线上。
+```
 
 ### `/ppt-review [slides-file]`
 
 Review an existing slides file against the full quality checklist. Fix issues, rebuild, return updated preview URL.
+
+### `/ppt-export [slides-file] [--format pptx|pdf|png]`
+
+Export slides to a downloadable file. Requires `playwright-chromium` (auto-installed on first run).
+
+- PPTX: slides exported as images with presenter notes preserved. `--with-clicks` on by default.
+- PDF: standard PDF export. Use `--with-clicks` for animation steps.
+- PNG: one image per slide.
 
 ### `/ppt-publish [vercel|github-pages]`
 

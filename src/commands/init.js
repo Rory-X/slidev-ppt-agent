@@ -1,9 +1,9 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { confirm } from '@inquirer/prompts';
 import { copyAssets, renderTemplates, computeFileHashes } from '../lib/scaffold.js';
 import { mergePackageJson } from '../lib/merge-package-json.js';
-import { detectPlatforms } from '../lib/detect-platform.js';
+import { promptPlatformSelection, parsePlatformsFlag, registerCommands, PLATFORM_REGISTRY } from '../lib/command-registrar.js';
 import { getPkgVersion, logStep, logSuccess, logWarn } from '../utils.js';
 
 export async function init(options) {
@@ -23,11 +23,19 @@ export async function init(options) {
     }
   }
 
+  // Platform selection: --platforms flag or interactive prompt
+  let platforms = parsePlatformsFlag(options.platforms);
+  if (!platforms) {
+    platforms = await promptPlatformSelection();
+  }
+
   logStep('Injecting PPT agent capabilities');
 
   copyAssets(cwd);
 
-  const platforms = detectPlatforms(cwd);
+  // Register native slash commands for selected platforms
+  registerCommands(cwd, platforms);
+
   const version = getPkgVersion();
   const createdAt = new Date().toISOString();
   const fileHashes = computeFileHashes(cwd);
@@ -47,8 +55,15 @@ export async function init(options) {
     logWarn('No package.json found. Run "npm init" first, then re-run "slidev-ppt-agent init".');
   }
 
+  const registeredNames = platforms
+    .filter((k) => PLATFORM_REGISTRY[k])
+    .map((k) => PLATFORM_REGISTRY[k].name)
+    .join(', ');
+
   logSuccess('PPT agent capabilities injected!');
   console.log(`
+  Registered platforms: ${registeredNames || 'none (AGENTS.md fallback)'}
+
   Added:
     .agents/skills/    — AI agent skills
     .agents/agents/    — Subagent role definitions
@@ -56,6 +71,5 @@ export async function init(options) {
     schemas/           — Validation schemas
     scripts/           — Engineering scripts
     AGENTS.md          — Agent behavior contract
-    CLAUDE.md          — Claude Code adapter
 `);
 }

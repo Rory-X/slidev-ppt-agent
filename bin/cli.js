@@ -19,6 +19,7 @@ program
   .description('Create a new PPT project with full agent capabilities')
   .option('--no-install', 'Skip npm install')
   .option('--no-git', 'Skip git init')
+  .option('--platforms <list>', 'Comma-separated platform keys: claude,cursor,codex,opencode,codebuddy')
   .action(async (projectName, options) => {
     const { create } = await import('../src/commands/create.js');
     await create(projectName, options);
@@ -28,6 +29,7 @@ program
   .command('init')
   .description('Inject PPT agent capabilities into the current project')
   .option('--force', 'Overwrite existing files without prompting')
+  .option('--platforms <list>', 'Comma-separated platform keys: claude,cursor,codex,opencode,codebuddy')
   .action(async (options) => {
     const { init } = await import('../src/commands/init.js');
     await init(options);
@@ -59,6 +61,20 @@ program
   .action(async (slidesFile, options) => {
     const { preview } = await import('../src/commands/preview.js');
     await preview(slidesFile, options);
+  });
+
+program
+  .command('export [slides-file]')
+  .description('Export slides to PPTX, PDF, or PNG')
+  .option('--format <format>', 'Export format: pptx, pdf, or png', 'pptx')
+  .option('--output <file>', 'Output filename')
+  .option('--with-clicks [bool]', 'Include click steps as separate pages (default: true for pptx)')
+  .option('--dark', 'Export in dark mode')
+  .option('--range <range>', 'Slide range (e.g., 1,4-7,10)')
+  .option('--timeout <ms>', 'Timeout per slide in ms')
+  .action(async (slidesFile, options) => {
+    const { exportSlides } = await import('../src/commands/export.js');
+    await exportSlides(slidesFile, options);
   });
 
 program
