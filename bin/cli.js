@@ -19,6 +19,7 @@ program
   .description('Create a new PPT project with full agent capabilities')
   .option('--no-install', 'Skip npm install')
   .option('--no-git', 'Skip git init')
+  .option('--platforms <list>', 'Comma-separated platform keys: claude,cursor,codex,opencode,codebuddy')
   .action(async (projectName, options) => {
     const { create } = await import('../src/commands/create.js');
     await create(projectName, options);
@@ -28,6 +29,7 @@ program
   .command('init')
   .description('Inject PPT agent capabilities into the current project')
   .option('--force', 'Overwrite existing files without prompting')
+  .option('--platforms <list>', 'Comma-separated platform keys: claude,cursor,codex,opencode,codebuddy')
   .action(async (options) => {
     const { init } = await import('../src/commands/init.js');
     await init(options);

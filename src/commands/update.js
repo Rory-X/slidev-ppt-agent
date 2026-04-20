@@ -2,6 +2,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { confirm } from '@inquirer/prompts';
 import { copyAssets, computeFileHashes } from '../lib/scaffold.js';
+import { registerCommands } from '../lib/command-registrar.js';
 import { getPkgVersion, logStep, logSuccess, logWarn, log } from '../utils.js';
 
 export async function update(options) {
@@ -53,6 +54,10 @@ export async function update(options) {
 
   logStep('Updating assets to latest version');
   copyAssets(cwd);
+
+  // Re-register commands for previously selected platforms
+  const platforms = config.platforms || ['claude', 'cursor'];
+  registerCommands(cwd, platforms);
 
   const newHashes = computeFileHashes(cwd);
   config.fileHashes = newHashes;

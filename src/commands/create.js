@@ -1,10 +1,10 @@
-import { resolve, basename } from 'node:path';
+import { resolve } from 'node:path';
 import { existsSync } from 'node:fs';
 import { execSync } from 'node:child_process';
 import { input } from '@inquirer/prompts';
 import { copyAssets, renderTemplates, ensureProjectDirs, computeFileHashes } from '../lib/scaffold.js';
-import { detectPlatforms } from '../lib/detect-platform.js';
-import { slugify, getPkgVersion, logStep, logSuccess, logError } from '../utils.js';
+import { promptPlatformSelection, parsePlatformsFlag, registerCommands, PLATFORM_REGISTRY } from '../lib/command-registrar.js';
+import { slugify, getPkgVersion, logStep, logSuccess, logError, log } from '../utils.js';
 
 export async function create(projectName, options) {
   if (!projectName) {
@@ -23,16 +23,19 @@ export async function create(projectName, options) {
     process.exit(1);
   }
 
+  // Platform selection: --platforms flag or interactive prompt
+  let platforms = parsePlatformsFlag(options.platforms);
+  if (!platforms) {
+    platforms = await promptPlatformSelection();
+  }
+
   logStep(`Creating project: ${slug}`);
 
   ensureProjectDirs(targetDir);
   copyAssets(targetDir);
 
-  const platforms = detectPlatforms(targetDir);
-  // For new projects, always include cursor support
-  if (!platforms.includes('cursor')) {
-    platforms.push('cursor');
-  }
+  // Register native slash commands for selected platforms
+  registerCommands(targetDir, platforms);
 
   const version = getPkgVersion();
   const createdAt = new Date().toISOString();
@@ -66,8 +69,15 @@ export async function create(projectName, options) {
     }
   }
 
+  const registeredNames = platforms
+    .filter((k) => PLATFORM_REGISTRY[k])
+    .map((k) => PLATFORM_REGISTRY[k].name)
+    .join(', ');
+
   logSuccess(`Project "${slug}" created!`);
   console.log(`
+  Registered platforms: ${registeredNames || 'none (AGENTS.md fallback)'}
+
   Next steps:
     cd ${slug}
     # Open in your AI editor (Cursor, Claude Code, etc.)
