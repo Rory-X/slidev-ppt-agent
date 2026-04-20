@@ -62,6 +62,20 @@ program
   });
 
 program
+  .command('export [slides-file]')
+  .description('Export slides to PPTX, PDF, or PNG')
+  .option('--format <format>', 'Export format: pptx, pdf, or png', 'pptx')
+  .option('--output <file>', 'Output filename')
+  .option('--with-clicks [bool]', 'Include click steps as separate pages (default: true for pptx)')
+  .option('--dark', 'Export in dark mode')
+  .option('--range <range>', 'Slide range (e.g., 1,4-7,10)')
+  .option('--timeout <ms>', 'Timeout per slide in ms')
+  .action(async (slidesFile, options) => {
+    const { exportSlides } = await import('../src/commands/export.js');
+    await exportSlides(slidesFile, options);
+  });
+
+program
   .command('publish')
   .description('Build and publish slides to Vercel or GitHub Pages')
   .option('--target <target>', 'Publish target: vercel or gh-pages')

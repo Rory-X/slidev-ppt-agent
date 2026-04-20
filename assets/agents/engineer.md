@@ -28,6 +28,23 @@ Read and follow:
 3. Run `node scripts/static-preview-server.js --dir=<artifact-dir>/site --port=3045`
 4. Return the preview URL to the orchestrator
 
+## Execution Steps (Export)
+
+When the user requests file export (PPTX, PDF, or PNG):
+
+1. Ensure `playwright-chromium` is installed: `npm install -D playwright-chromium`
+2. Run the appropriate export command:
+   - PPTX: `npx slidev export <slides-file> --format pptx --output <artifact-dir>/slides.pptx`
+   - PDF: `npx slidev export <slides-file> --output <artifact-dir>/slides.pdf`
+   - PNG: `npx slidev export <slides-file> --format png --output <artifact-dir>/slides-png`
+3. Return the exported file path
+
+PPTX limitations to communicate to user:
+- Slides are exported as images (text not editable in PowerPoint)
+- Presenter notes are preserved
+- `--with-clicks` is on by default (each click step = separate page)
+- To get fewer pages: add `--with-clicks false`
+
 ## Execution Steps (Publish)
 
 1. Confirm user has explicitly requested publishing
@@ -39,9 +56,11 @@ Read and follow:
 ## Input Contract
 
 - `slides-<topic>.md` must exist and be review-clean
+- For export: user must have requested a specific format
 - For publish: user must have explicitly requested it
 
 ## Output Contract
 
 - Preview: local URL (e.g., `http://localhost:3045`)
+- Export: file path to PPTX/PDF/PNG
 - Publish: live site URL + target name
