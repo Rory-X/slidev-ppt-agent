@@ -89,9 +89,16 @@ npx slidev-ppt-agent publish
 
 ```
 my-deck/
-├── .agents/skills/         # 9 个 Agent 技能（调研、设计、大纲、编写等）
+├── .agents/
+│   ├── skills/             # 9 个 Agent 技能（调研、设计、大纲、编写等）
+│   └── agents/             # 6 个 Subagent 角色定义（调研员、设计总监等）
 ├── .cursor/rules/          # Cursor 编排规则
 ├── design-system/          # Token、原型、页面模板、CSS
+│   ├── archetypes/         # 7 个叙事结构（技术分享、路演、高管汇报等）
+│   ├── tokens/             # 5 套色彩/字体/间距/动效 Token
+│   ├── page-templates/     # 15 个 Slidev 页面模板
+│   ├── layouts/            # Bento Grid 布局模式
+│   └── styles/             # 毛玻璃卡片、图标盒、排版阶梯等
 ├── schemas/                # Agent 输出的 JSON Schema 校验
 ├── scripts/                # 工程辅助脚本
 ├── AGENTS.md               # 通用 Agent 入口
@@ -104,10 +111,32 @@ my-deck/
 
 内置从专业级演示文稿提取的完整设计系统：
 
-- **原型**: `technical-share` 和 `pitch-deck` 叙事结构
-- **Token**: 调色板、字体排版、间距、动效预设
-- **页面模板**: 封面、目录、内容分栏、三卡片、代码展示、双栏详情、总结
-- **CSS 类**: `.glass-card`、`.icon-box`、`.section-bar`、`.tag-badge`、`.gradient-title`
+- **原型**: 7 个叙事结构（technical-share、pitch-deck、executive-briefing、training-workshop、quarterly-review、product-launch、research-readout）
+- **Token**: 5 套主题（tech-minimal、corporate-blue、pitch-modern、mono-editorial、warm-creative）
+- **页面模板**: 15 个视觉模板（cover、toc、content-split、three-cards、code-showcase、hero-metric、timeline、comparison-table、image-showcase、quote-highlight、team-grid、faq、metrics-strip、detail-two-col、summary）
+- **布局模式**: Bento Grid 9 种模式 + 反模式检测
+- **CSS 类**: `.glass-card`、`.icon-box`、`.section-bar`、`.tag-badge`、`.gradient-title`、`.metric-big`、`.ppt-table`
+- **动画策略**: 权威参考文档，含时间系统、过渡决策树、减少动效兜底
+
+## Subagent 架构
+
+Harness 采用 Skill + Agent 双层架构：
+
+- **Skill**（`.agents/skills/`）= 领域知识，纯指令文档
+- **Agent**（`.agents/agents/`）= 执行角色，含 I/O 契约、文件归属、并行策略
+
+6 个 Agent 角色：
+
+| 角色 | 职责 | 可并行 |
+|------|------|--------|
+| researcher | 多维度深度调研 | 按维度并行搜索 |
+| designer | 风格/原型/Token 决策 | 否 |
+| architect | 金字塔原理大纲生成 | 否 |
+| composer | Slidev 幻灯片编写 | 按大纲 Part 并行编写 |
+| reviewer | 多维度质量审查 | 按审查类别并行检查 |
+| engineer | 构建/预览/发布 | 否 |
+
+支持 subagent 的平台（Cursor Task tool、Claude Code Agent Teams）自动启用并行调度，不支持的平台自动 fallback 到串行执行。
 
 ## 升级
 
