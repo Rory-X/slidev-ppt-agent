@@ -1,5 +1,7 @@
 # slidev-ppt-agent
 
+[English](README.md) | [中文](README.zh-CN.md)
+
 一条命令，让任何 AI Agent 学会做高质量 PPT，内置预览和一键发布。
 
 ```bash

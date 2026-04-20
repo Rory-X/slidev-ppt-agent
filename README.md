@@ -1,5 +1,7 @@
 # slidev-ppt-agent
 
+[English](README.md) | [中文](README.zh-CN.md)
+
 One command to give any AI agent the ability to create high-quality Slidev presentations, with built-in preview and one-click publishing.
 
 ```bash
