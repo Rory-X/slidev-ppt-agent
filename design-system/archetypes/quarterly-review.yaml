@@ -13,9 +13,9 @@ phaseSlideRange:
   next-quarter: [1, 2]
 templateMapping:
   highlights: [cover, three-cards]
-  metrics: [hero-metric, metrics-strip, comparison-table, detail-two-col]
-  challenges: [three-cards, content-split]
-  next-quarter: [summary, content-split]
+  metrics: [hero-metric, metrics-strip, comparison-table, detail-two-col, evidence-dashboard]
+  challenges: [three-cards, content-split, process-with-risks]
+  next-quarter: [summary, content-split, comparison-matrix-lite]
 contentTypes:
   highlights: [text, KPI]
   metrics: [KPI, chart, table, diagram]
@@ -26,11 +26,13 @@ layoutPolicy:
     - hero-top
     - two-cols-symmetric
     - single-focus
-  avoid:
     - mixed-grid
+  avoid:
     - dense-code-layout
 styleRules:
   maxBulletsPerSlide: 5
+  maxBulletsPerEvidenceSlide: 6
+  minContentBlocksPerContentSlide: 3
   allowCodeBlocks: false
   maxVisualEffectsPerSlide: 1
   emphasisStyle: bold-metrics

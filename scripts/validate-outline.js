@@ -76,6 +76,21 @@ function run() {
   }
 
   // evidence_refs and key_message warnings
+  const allowedDensities = new Set(["light", "standard", "dense"]);
+  const allowedPageTypes = new Set([
+    "hero",
+    "comparison",
+    "process",
+    "evidence",
+    "dashboard",
+    "architecture",
+    "quote",
+    "section",
+    "cta"
+  ]);
+  let lightPages = 0;
+  let densePages = 0;
+
   parts.forEach((part, pi) => {
     (part.pages || []).forEach((page, pgi) => {
       if (!page.evidence_refs || page.evidence_refs.length === 0) {
@@ -90,8 +105,54 @@ function run() {
           message: `Part ${pi + 1}, Page "${page.title}": no key_message.`
         });
       }
+      if (!page.density) {
+        issues.push({
+          code: "MISSING_DENSITY",
+          message: `第 ${pi + 1} 部分，页面「${page.title}」缺少 density。`
+        });
+      } else if (!allowedDensities.has(page.density)) {
+        issues.push({
+          code: "INVALID_DENSITY",
+          message: `第 ${pi + 1} 部分，页面「${page.title}」的 density 必须是 light、standard 或 dense。`
+        });
+      } else {
+        if (page.density === "light") lightPages += 1;
+        if (page.density === "dense") densePages += 1;
+      }
+      if (!page.page_type) {
+        issues.push({
+          code: "MISSING_PAGE_TYPE",
+          message: `第 ${pi + 1} 部分，页面「${page.title}」缺少 page_type。`
+        });
+      } else if (!allowedPageTypes.has(page.page_type)) {
+        issues.push({
+          code: "INVALID_PAGE_TYPE",
+          message: `第 ${pi + 1} 部分，页面「${page.title}」的 page_type 不在允许范围内。`
+        });
+      }
+      if (!page.content_budget) {
+        issues.push({
+          code: "MISSING_CONTENT_BUDGET",
+          message: `第 ${pi + 1} 部分，页面「${page.title}」缺少 content_budget。`
+        });
+      }
     });
   });
+
+  if (contentPages > 0) {
+    if (lightPages / contentPages > 0.2) {
+      warnings.push({
+        code: "LIGHT_PAGE_RATIO_HIGH",
+        message: `light 页面为 ${lightPages}/${contentPages}；除非 brief 明确要求，否则刻意留白页应控制在 20% 以内。`
+      });
+    }
+    if (densePages / contentPages > 0.3) {
+      warnings.push({
+        code: "DENSE_PAGE_RATIO_HIGH",
+        message: `dense 页面为 ${densePages}/${contentPages}；如果 deck 显得过重，应考虑重新分配内容。`
+      });
+    }
+  }
 
   const result = {
     checkedAt: nowIso(),
@@ -108,6 +169,7 @@ function run() {
 
   if (!result.valid) {
     console.error(`Outline validation failed with ${issues.length} issue(s).`);
+    issues.forEach(i => console.error(`  - [${i.code}] ${i.message}`));
     process.exitCode = 1;
     return;
   }

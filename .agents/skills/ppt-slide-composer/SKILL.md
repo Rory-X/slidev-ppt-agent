@@ -27,6 +27,36 @@ After outline (`outline.json`) and style plan (`style-plan.md`) are ready. This 
 - **层级感**: 使用卡片尺寸建立视觉层级。最重要的信息放在最大的卡片上。
 - **留白**: 在所有卡片之间保持至少 20px 的间距。
 
+## 版面信息密度预算（关键）
+
+每一页内容型幻灯片都要同时控制两个风险：溢出和空泛。不要为了避免溢出而把所有页面都做得很稀疏。生成时必须读取大纲中的 `density`、`page_type`、`content_budget`，据此判断该页应该承载多少信息。
+
+| 密度 | 画布使用目标 | 最低内容量 | 常见布局 |
+|------|--------------|------------|----------|
+| `light` | 35-55%，刻意聚焦 | 1 个强主张 + 英雄视觉/引用/CTA | cover、section、quote、end、hero metric |
+| `standard` | 60-80%，信息均衡 | 3 个有效信息块，或 1 个视觉 + 2 个支撑块 | two-cols、hero-top、3-4 cards |
+| `dense` | 75-90%，丰富但可读 | 4 个以上信息块，或数据/代码/图表 + 明确解读 | mixed-grid、L-shape、dashboard、annotated architecture |
+
+### 防空泛规则
+
+普通内容页禁止出现“意外稀疏”。如果页面只有标题加一句短句、一个孤立小卡片，或 1-2 条 bullet 且没有强视觉支撑，就属于信息不足。
+
+当页面显得空泛时，先增强内容，再考虑新增页面：
+- 补充证据、案例、权衡、影响、下一步行动，或底部洞察条。
+- 把普通 bullet 转换成 3-4 张带短标题和解释的卡片。
+- 将紧凑图表、图像或 Mermaid 与 2-3 个解读卡片组合。
+- 如果相邻两个低密度内容页表达同一个观点，优先合并。
+
+### 受控组合规则
+
+“单一视觉重心”用于避免两个重元素互相争夺注意力，不等于禁止上下文信息。只要各元素都在尺寸预算内，允许以下组合：
+- 小型 Mermaid 或图示 + 2-3 个注释卡片。
+- 短代码块（不超过 12 行）+ 解释卡 + 关键结论。
+- 紧凑表格 + 1 条高亮洞察。
+- 英雄指标 + 3 个支撑迷你卡片。
+
+只有在分组、缩写、Bento 布局、`maxHeight` 或 `zoom: 0.8` 之后仍超过密度预算时，才拆分页面。
+
 ### 布局组合示例
 - **单一焦点**: 一张大卡片覆盖大部分区域 (w=1200, h=580)。适用于单一、有力的信息或详细的图表。
 - **两栏布局 (50/50 对称)**: 两张等宽的卡片。
@@ -77,18 +107,19 @@ Mermaid diagrams are the #1 source of overflow issues. Follow these strictly:
 5. **Forbidden combo**: never place Mermaid + code block + bullet list on the same slide.
 6. **Prefer simpler diagram types**: `graph TD` > `flowchart` for simple flows; avoid `classDiagram` unless truly needed.
 
-## Composition Process
+## 组合流程
 
-1. Read outline and style plan.
-2. Set up headmatter (theme, title, transition, fonts from token set).
-3. Import global styles from `design-system/styles/`.
-4. For each page in outline:
-   a. Determine the best page type / layout based on content.
-   b. Reference the closest page-template as design language baseline.
-   c. Write the slide using Slidev markdown, applying CSS classes from the design system.
-   d. Apply appropriate animation (see Animation Strategy below).
-   e. Add presenter notes (HTML comments).
-5. Run self-check against overflow rules from slidev skill.
+1. 阅读 outline 和 style plan。
+2. 设置 headmatter（主题、标题、转场、来自 token set 的字体）。
+3. 引入 `design-system/styles/` 中的全局样式。
+4. 针对 outline 中的每一页：
+   a. 根据内容判断最合适的页面类型和布局。
+   b. 读取 `density`、`page_type`、`content_budget`；选择既满足最低内容量又不溢出的布局。
+   c. 参考最接近的 page-template 作为设计语言基线。
+   d. 使用 Slidev markdown 编写页面，并应用设计系统 CSS class。
+   e. 应用合适的动画（见下方动画策略）。
+   f. 添加演讲者备注（HTML 注释）。
+5. 根据 slidev skill 的溢出规则进行自检。
 
 ## Animation Strategy
 
@@ -106,21 +137,23 @@ Global constraints:
 - Adjacent slides should not use the same transition
 - Section dividers use fade, content slides use slide-left
 
-## Quality Gates
+## 质量门禁
 
-- Every slide has presenter notes
-- No content overflow (follow slidev skill density rules)
-- Colors and fonts match the selected token set (mandatory)
-- Animation fits the page scenario
-- Bilingual headings where appropriate (Chinese main + English subtitle)
+- 每页都有演讲者备注
+- 内容不溢出（遵守 slidev skill 的密度规则）
+- 不出现意外空泛的内容页（standard/dense 页面必须满足 content_budget）
+- 配色和字体匹配选定的 token set（必须）
+- 动画符合页面场景
+- 需要时使用双语标题（中文主标题 + 英文副标题）
 
-## Active Page Splitting
+## 主动拆页规则
 
-When outline indicates a page with high density:
-- **> 6 bullet points**: MUST split into 2 slides (Part 1/Part 2 with continued title)
-- **> 12 lines of code**: MUST split or use `maxHeight: '300px'` with scroll
-- **> 8 Mermaid nodes**: MUST use dedicated full-width slide
-- **Code + Diagram on same page**: FORBIDDEN. Move one to next slide.
+当 outline 标注页面为高密度时：
+- **7-8 条 bullet**：先分组成卡片、分栏或洞察条，再考虑拆页
+- **超过 8 条 bullet**：除非是紧凑 checklist 或表格型结构，否则拆页
+- **超过 12 行代码**：使用 `maxHeight: '300px'`、减少可见行数，或在代码本身是叙事重点时拆页
+- **超过 8 个 Mermaid 节点**：必须使用独立全宽页面
+- **代码 + 大型图示同页**：禁止。短代码块可以与小型解释图搭配，但二者不能同时成为页面主视觉。
 
 ## Image Usage Rules
 
@@ -146,7 +179,7 @@ Each slide has exactly ONE visual heavyweight:
 - ONE comparison table, OR
 - ONE quote block
 
-Combining two heavyweights (e.g., code + diagram) is FORBIDDEN. Light elements (short text, bullet list <= 4 items, small icon) can accompany the heavyweight.
+禁止组合两个重元素（例如大型代码块 + 大型图示）。轻量元素（短文本、不超过 4 条的 bullet、小图标、迷你 KPI、1-2 个注释卡）应该作为重元素的上下文补充，避免页面显得空。
 
 ## Design System Enforcement
 

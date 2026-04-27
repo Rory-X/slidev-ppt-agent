@@ -16,9 +16,9 @@ phaseSlideRange:
 templateMapping:
   problem: [content-split, hero-metric]
   vision: [image-showcase, cover]
-  solution: [detail-two-col, three-cards, content-split]
+  solution: [detail-two-col, three-cards, content-split, insight-plus-proof, architecture-annotated]
   demo: [code-showcase, image-showcase, content-split]
-  pricing-cta: [comparison-table, summary]
+  pricing-cta: [comparison-table, comparison-matrix-lite, summary]
 contentTypes:
   problem: [text, quote, KPI]
   vision: [text, image]
@@ -30,11 +30,13 @@ layoutPolicy:
     - hero-top
     - two-cols-asymmetric
     - single-focus
+    - mixed-grid
   avoid:
     - dense-code-layout
-    - three-cols
 styleRules:
-  maxBulletsPerSlide: 4
+  maxBulletsPerSlide: 5
+  maxBulletsPerEvidenceSlide: 6
+  minContentBlocksPerContentSlide: 3
   allowCodeBlocks: true
   maxVisualEffectsPerSlide: 2
   emphasisStyle: visual-impact

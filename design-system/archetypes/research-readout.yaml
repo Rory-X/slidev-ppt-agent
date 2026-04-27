@@ -14,8 +14,8 @@ phaseSlideRange:
 templateMapping:
   background: [cover, content-split]
   methodology: [content-split, detail-two-col]
-  findings: [detail-two-col, hero-metric, three-cards, comparison-table]
-  implications: [content-split, summary]
+  findings: [detail-two-col, hero-metric, three-cards, comparison-table, evidence-dashboard, insight-plus-proof]
+  implications: [content-split, summary, process-with-risks]
 contentTypes:
   background: [text, quote]
   methodology: [text, diagram, table]
@@ -26,10 +26,13 @@ layoutPolicy:
     - two-cols-asymmetric
     - single-focus
     - three-cols
-  avoid:
     - mixed-grid
+  avoid:
+    - dense-code-layout
 styleRules:
-  maxBulletsPerSlide: 6
+  maxBulletsPerSlide: 7
+  maxBulletsPerEvidenceSlide: 8
+  minContentBlocksPerContentSlide: 3
   allowCodeBlocks: true
   maxVisualEffectsPerSlide: 2
   emphasisStyle: data-first

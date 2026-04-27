@@ -179,56 +179,69 @@ Presenter notes go here
 | Slide hooks | `onSlideEnter()`, `onSlideLeave()` | [api-slide-hooks](references/api-slide-hooks.md) |
 | Navigation API | `$nav`, `useNav()` | [core-global-context](references/core-global-context.md) |
 
-## Content Density Rules (CRITICAL)
+## 内容密度规则（关键）
 
-Slidev canvas is **980×552px** by default. Content overflowing this area is **invisible and makes the slide unusable**. You MUST follow these hard limits for every slide you generate.
+Slidev 默认画布是 **980×552px**。超出该区域的内容会被裁切，导致页面不可用。生成每一页时都必须遵守下方边界。
 
-### Hard Limits Per Slide
+好的幻灯片也要避免意外空泛。普通内容页应该有意识地使用画布，用足够的证据、解读、对比或视觉结构支撑核心观点。不要为了防溢出而过度拆分或简化，导致内容页只占半屏。
 
-| Element | Maximum | Overflow Fix |
-|---------|---------|-------------|
-| Bullet points | 5-6 items | Split into 2 slides |
-| Code block lines | 10-12 lines | Use `{maxHeight:'200px'}` for scroll, or split |
-| Mermaid diagram nodes | 8-10 nodes | Use `{scale: 0.45}` or simplify; >8 nodes must be on dedicated slide |
-| Table rows | 5-6 rows | Split table or reduce columns |
-| Two-col layout | ~250px height per col | Keep each column ≤ 6 short items |
-| Grid cards | 4 cards max | Each card ≤ 3 lines of text |
-| Sequence diagram actors | 4-5 actors | Simplify or abbreviate names |
+### 单页密度预算
 
-### Mandatory Techniques
+| 密度 | 目标 | 最低内容量 | 常见用途 |
+|------|------|------------|----------|
+| `light` | 刻意聚焦，使用 35-55% 画布 | 1 个强主张 + 英雄视觉/引用/CTA | cover、section、quote、end、hero metric |
+| `standard` | 信息均衡，使用 60-80% 画布 | 3 个有效信息块，或 1 个视觉 + 2 个支撑块 | 默认内容页、对比页、流程页 |
+| `dense` | 丰富但可读，使用 75-90% 画布 | 4 个以上信息块，或数据/代码/图表 + 明确解读 | dashboard、architecture、evidence page |
 
-1. **Code blocks >10 lines**: MUST add `{maxHeight:'200px'}` or split across slides
-2. **Mermaid diagrams**: ALWAYS set explicit `{scale: ...}` — never use default scale
-   - Full-width slide: `{scale: 0.45}` to `{scale: 0.6}`
-   - Inside two-column layout: `{scale: 0.3}` to `{scale: 0.4}` (half available width)
-   - Node text: max 8 Chinese characters / 15 English characters per node
-   - More than 8 nodes: diagram MUST occupy its own dedicated slide (no other content)
-   - Mermaid + other content on same slide: wrap diagram in `<div style="max-height:250px;overflow:hidden">`
-   - NEVER place Mermaid + code block + bullet list on the same slide
-3. **Dense slides**: Use `zoom: 0.8` in per-slide frontmatter to fit 20% more content
-4. **Two-column layouts**: Each column must independently fit within ~250px height
-5. **Tables**: Max 6 rows × 5 columns. For comparisons with 7+ items, split into 2 slides
-6. **Combined elements**: NEVER put code block + diagram + list on the same slide — pick at most 2
-7. **Slide titles**: Use `#` headings (not `##`) — they consume less vertical space
-8. **Auto-TOC**: NEVER use `<Toc>` component for decks with >10 slides — it will overflow. Use a hand-crafted summary instead
+### 单页安全区间
 
-### Quick Decision Tree
+| 元素 | 安全上限 | 溢出处理 |
+|------|----------|----------|
+| Bullet points | standard：4-6 条；dense：6-8 条并分组 | 转为卡片/分栏；超过预算才拆页 |
+| Code block lines | 可见 10-12 行；12-18 行需要容器控制 | 使用 `{maxHeight:'200px'}`、减少可见行数，或拆页 |
+| Mermaid diagram nodes | 8-10 个节点 | 使用 `{scale: 0.45}` 或简化；超过 8 个节点通常独立成页，除非非常紧凑 |
+| Table rows | 5-6 行 | 增加 key takeaway、转置、卡片化，或拆页 |
+| Two-col layout | 每栏约 250px 高 | 每栏不超过 6 条短内容 |
+| Grid cards | standard：3-4 张；dense：4-6 张紧凑卡 | 使用 2x2、hero-top + mini cards 或 L-shape |
+| Sequence diagram actors | 4-5 个参与者 | 简化或缩写名称 |
 
-- Content too much? → **Split into 2 slides** (always preferred) or use `zoom: 0.8`
-- Code too long? → `{maxHeight:'200px'}` for scrolling
-- Diagram too big? → `{scale: 0.45}` or simplify nodes
-- Table too wide/tall? → Reduce columns, abbreviate cell text, split across slides
-- Everything still overflows? → `zoom: 0.7` as last resort
+### 必用技巧
 
-### Self-Check Before Finishing
+1. **代码块超过 10 行**：必须添加 `{maxHeight:'200px'}`、减少可见行数，或拆成多页
+2. **Mermaid 图**：必须显式设置 `{scale: ...}`，不要使用默认缩放
+   - 全宽页面：`{scale: 0.45}` 到 `{scale: 0.6}`
+   - 双栏内部：`{scale: 0.3}` 到 `{scale: 0.4}`（可用宽度减半）
+   - 节点文本：中文最多 8 字，英文最多 15 字
+   - 超过 8 个节点：通常独立成页；只有在图非常紧凑且只搭配简短注释时才可同页
+   - Mermaid 与其他内容同页时：用 `<div style="max-height:250px;overflow:hidden">` 包裹
+   - 禁止 Mermaid + 代码块 + bullet list 三者同页
+3. **高密度页面**：使用分组、Bento 布局和单页 frontmatter 的 `zoom: 0.8`，在不损害可读性的前提下多容纳约 20% 内容
+4. **双栏布局**：每一栏都必须能独立放进约 250px 高度
+5. **表格**：原始表格最多 6 行 × 5 列。对比项达到 7 个以上时，优先转置、缩写、卡片化或拆页
+6. **组合元素**：禁止代码块 + 图示 + 列表三者同页；当其中一个元素明显轻量时，允许两类元素组合
+7. **页面标题**：使用 `#` 标题（不要用 `##`），减少垂直空间占用
+8. **自动目录**：超过 10 页的 deck 禁止使用 `<Toc>` 组件，容易溢出；改用手工摘要
+9. **空泛内容页**：standard/dense 页面如果只有 1-2 条短 bullet 且没有强视觉，必须补充证据、案例、影响，或与相关页面合并
 
-After generating ALL slides, mentally verify each slide against these rules:
-1. Count bullet points — over 6? Split.
-2. Count code lines — over 12? Add maxHeight or split.
-3. Any Mermaid without explicit scale? Add `{scale: 0.5}`. In two-col? Use `{scale: 0.35}`.
-4. Mermaid with >8 nodes sharing a slide with other content? Move to dedicated slide.
-5. Two-col slide with code on both sides? Almost certainly overflows — simplify.
-6. Table with >6 rows? Split.
+### 快速决策树
+
+- 内容太多？→ 先分组、缩写、卡片化、使用 Bento 布局、添加 `maxHeight`/`zoom: 0.8`；仍超预算才拆页
+- 内容太少？→ 补充支撑块、证据、案例、对比，或与相邻稀疏页面合并
+- 代码太长？→ 使用 `{maxHeight:'200px'}` 滚动
+- 图太大？→ 使用 `{scale: 0.45}` 或简化节点
+- 表格太宽/太高？→ 减少列数、缩写单元格文本、转成卡片或拆页
+- 仍然溢出？→ `zoom: 0.7` 作为最后手段
+
+### 完成前自检
+
+生成所有页面后，逐页检查：
+1. 检查密度：standard/dense 页面是否至少有 3 个有效信息块，或等价视觉支撑？
+2. 统计 bullet：超过 8 条时，是否已分组、卡片化或拆页？
+3. 统计代码行：超过 12 行时，是否已添加 maxHeight 或拆页？
+4. Mermaid 是否都有显式 scale？双栏中是否使用 `{scale: 0.35}` 左右？
+5. 超过 8 个节点的 Mermaid 是否仍与重内容同页？如是，移到独立页面。
+6. 双栏两侧都是代码块？通常会溢出，需要简化。
+7. 表格超过 6 行？卡片化、转置或拆页。
 
 See [content-overflow-prevention](references/content-overflow-prevention.md) for detailed examples.
 

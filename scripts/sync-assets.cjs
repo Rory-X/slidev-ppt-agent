@@ -21,8 +21,10 @@ const MAPPINGS = [
 ];
 
 const SCRIPT_FILES = [
+  'package.json',
   'harness-utils.js',
   'validate-outline.js',
+  'validate-slides-density.js',
   'validate-style.js',
   'static-preview-server.js',
 ];

@@ -40,6 +40,9 @@ JSON 必须符合 `schemas/outline.schema.json`。
 - `key_message`: 该页核心结论（一句话）
 - `content`: 要点数组
 - `evidence_refs`: 引用的调研证据来源
+- `density`: 页面信息密度，取值为 `light`、`standard`、`dense`
+- `page_type`: 页面类型，取值为 `hero`、`comparison`、`process`、`evidence`、`dashboard`、`architecture`、`quote`、`section`、`cta`
+- `content_budget`: 该页应承载的信息结构，例如 `1 个主张 + 3 个证据卡 + 1 条行动建议`
 
 ## 页数约束
 - 严格遵守 brief 中 `pageRequirements.totalPages`
@@ -56,70 +59,90 @@ JSON 必须符合 `schemas/outline.schema.json`。
 ## Post-Output Validation
 生成大纲后，运行 `node scripts/validate-outline.js` 校验结构完整性。
 
-## Worked Example
+## 示例结构
 
-Below is a complete 3-part, 10-page example demonstrating Pyramid Principle structure with evidence tracing. Adapt the topic and evidence_refs to your actual brief and research report.
+下面是一个 3 部分、10 页的大纲示例，展示如何用金字塔原理组织结构，并为每页标注 evidence_refs、density、page_type、content_budget。请根据实际主题和调研结果调整。
 
 ```
 Part 1: "Why [Topic] Matters" (3 pages)
   ├─ Page 1: "The $X Billion Problem"
   │   key_message: "Current approach wastes $X annually across the industry"
   │   evidence_refs: [market:F1, market:F3]
-  │   density: medium
+  │   density: standard
+  │   page_type: evidence
+  │   content_budget: "1 个主张 + 3 个证据卡"
   │
   ├─ Page 2: "Three Root Causes"
   │   key_message: "Legacy systems, skill gaps, and inadequate tooling"
   │   evidence_refs: [audience:F2, tech:F5]
-  │   density: medium
+  │   density: standard
+  │   page_type: process
+  │   content_budget: "3 个原因卡 + 1 条结论"
   │
   └─ Page 3: "Cost of Inaction"
       key_message: "Competitors already achieving 3x efficiency gains"
       evidence_refs: [competitor:F4]
       density: light
+      page_type: hero
+      content_budget: "1 个英雄指标 + 2 个影响点"
 
 Part 2: "Our Approach" (4 pages)
   ├─ Page 4: "Architecture Overview"
   │   key_message: "Three-layer design separates concerns cleanly"
   │   evidence_refs: [tech:F6, tech:F7]
-  │   density: medium
+  │   density: standard
+  │   page_type: architecture
+  │   content_budget: "1 个架构图 + 3 个注释点"
   │
   ├─ Page 5: "Core Engine"
   │   key_message: "Processes 10K events per second with sub-ms latency"
   │   evidence_refs: [tech:F8]
-  │   density: heavy [SPLIT_CANDIDATE]
+  │   density: dense
+  │   page_type: dashboard
+  │   content_budget: "1 个核心流程 + 4 个性能/约束卡 [SPLIT_CANDIDATE]"
   │
   ├─ Page 6: "Integration Points"
   │   key_message: "Works with existing CI/CD, monitoring, and auth stack"
   │   evidence_refs: [tech:F9]
-  │   density: medium
+  │   density: standard
+  │   page_type: architecture
+  │   content_budget: "1 个集成图 + 3 个接口卡"
   │
   └─ Page 7: "Security & Compliance"
       key_message: "SOC2 certified, GDPR-ready from day one"
       evidence_refs: [tech:F10]
       density: light
+      page_type: evidence
+      content_budget: "1 个合规主张 + 2 个证明点"
 
 Part 3: "Next Steps" (3 pages)
   ├─ Page 8: "Pilot Results"
   │   key_message: "3x improvement in deployment frequency during 8-week pilot"
   │   evidence_refs: [tech:F11, market:F12]
-  │   density: medium
+  │   density: standard
+  │   page_type: dashboard
+  │   content_budget: "3 个 KPI 卡 + 1 条趋势解读"
   │
   ├─ Page 9: "Risks & Mitigations"
   │   key_message: "Two key risks identified with concrete mitigation plans"
   │   evidence_refs: [counter:F13]
-  │   density: medium
+  │   density: standard
+  │   page_type: comparison
+  │   content_budget: "2 个风险 + 2 个缓解方案 + 底部结论"
   │
   └─ Page 10: "Call to Action"
       key_message: "Start pilot by Q3 with 2-person team, decision by Q4"
       evidence_refs: [market:F14]
       density: light
+      page_type: cta
+      content_budget: "1 个行动请求 + 3 个下一步"
 ```
 
-Key observations:
-- Part 1 establishes urgency (Pyramid: situation → complication → question)
-- Part 2 delivers the answer (solution details, progressively deeper)
-- Part 3 proves feasibility and drives action (evidence → risk acknowledgment → ask)
-- Every page traces back to specific research findings via `evidence_refs`
+关键观察：
+- Part 1 建立紧迫性（情境 → 冲突 → 问题）
+- Part 2 给出答案（方案细节逐步展开）
+- Part 3 证明可行性并推动行动（证据 → 风险回应 → 请求）
+- 每页都通过 `evidence_refs` 追溯到具体调研发现
 
 ## Narrative Arc Alignment
 
@@ -167,18 +190,29 @@ Rules:
 - The reviewer uses these references to trace any slide claim back to specific research findings for fact-checking.
 - If a page synthesizes multiple dimensions, list all relevant refs: `[market:F1, tech:F6, competitor:F3]`.
 
-## Content Density Estimation
+## 内容密度估算
 
-For each page in the outline, annotate the expected content density:
+为每个内容页标注预期信息密度。该字段是 composer 的版面预算输入，不是装饰性备注。
 
-| Density | Description | Typical Content |
-|---------|-------------|-----------------|
-| `light` | Minimal content, high visual impact | 1-3 bullets, single hero visual, or a key quote |
-| `medium` | Balanced text and visuals | 4-5 bullets, or one visual + supporting text |
-| `heavy` | Dense information | 6+ bullets, code blocks, complex diagrams, or detailed tables |
+| Density | 说明 | 典型内容 |
+|---------|------|----------|
+| `light` | 少量内容，高视觉冲击 | 1 个强主张、单一英雄视觉、关键引用、章节页或 CTA |
+| `standard` | 默认内容页，文字与视觉均衡 | 3-4 个信息块、4-6 条 bullet，或 1 个视觉 + 2 个支撑块 |
+| `dense` | 高信息量但仍可读 | 4 个以上信息块、6-8 条分组 bullet、代码块、复杂图表或详细表格 |
 
 Rules:
-- When density is `heavy`, add the annotation `[SPLIT_CANDIDATE]` to signal the composer that this page may need splitting into 2 slides.
-- The composer agent checks for `[SPLIT_CANDIDATE]` and decides whether to split based on the actual content and layout constraints.
-- Aim for no more than 30% of pages at `heavy` density. If more than 30% are heavy, revisit the outline structure -- the content may need redistribution.
-- Cover, TOC, and End pages are always `light` by definition.
+- 普通内容页默认使用 `standard`，不要把内容页默认降为 `light`。
+- `light` 只用于 cover、TOC、section divider、quote、end、强视觉 hero 或 CTA；内容页使用 `light` 时必须在 `content_budget` 中说明意图。
+- 当 density 为 `dense` 时，可在 `content_budget` 中加入 `[SPLIT_CANDIDATE]`，提示 composer 评估是否需要拆页；这不是默认拆页命令。
+- `dense` 页面建议不超过内容页的 30%。如果超过 30%，应重新分配内容。
+- `light` 页面建议不超过内容页的 20%，否则 deck 容易显得空泛。
+- Cover、TOC、End 可视为 `light`，但不计入内容页密度比例。
+
+### content_budget 写法
+
+`content_budget` 必须说明该页应如何填充画布，例如：
+
+- `1 个主张 + 3 个证据卡`
+- `1 个架构图 + 3 个注释点`
+- `2 列对比 + 底部结论条`
+- `5 个 KPI 卡 + 1 条趋势解读`

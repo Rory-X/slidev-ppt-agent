@@ -13,7 +13,7 @@ phaseSlideRange:
   ask: [1, 2]
 templateMapping:
   situation: [cover, content-split]
-  findings: [hero-metric, three-cards, comparison-table]
+  findings: [hero-metric, three-cards, comparison-table, evidence-dashboard, insight-plus-proof]
   recommendation: [content-split, detail-two-col]
   ask: [summary]
 contentTypes:
@@ -26,11 +26,13 @@ layoutPolicy:
     - single-focus
     - two-cols-asymmetric
     - hero-top
+    - evidence-dashboard
   avoid:
-    - mixed-grid
-    - three-cols
+    - dense-code-layout
 styleRules:
-  maxBulletsPerSlide: 4
+  maxBulletsPerSlide: 5
+  maxBulletsPerEvidenceSlide: 6
+  minContentBlocksPerContentSlide: 3
   allowCodeBlocks: false
   maxVisualEffectsPerSlide: 1
   emphasisStyle: bold-metrics

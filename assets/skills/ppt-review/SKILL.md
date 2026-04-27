@@ -23,7 +23,17 @@ For each slide, check the following categories:
 - [ ] Cards do not overlap or bleed into adjacent elements
 - [ ] Code blocks with >10 lines have `{maxHeight:'200px'}`
 
-### 2. Mermaid Diagram Specific
+### 2. 信息密度与画布使用
+
+- [ ] 普通内容页没有明显只使用半屏以下（cover、section、quote、end、强视觉 hero 除外）
+- [ ] 不存在“标题 + 一句短话”“单个孤立小卡片”“1-2 条 bullet 且无视觉支撑”的意外空泛页面
+- [ ] `standard` 页面至少包含 3 个有效信息块，或 1 个主视觉 + 2 个支撑块
+- [ ] `dense` 页面至少包含 4 个有效信息块，或数据/代码/图表 + 明确解读
+- [ ] 页面内容充分体现 outline 的 `key_message`、`content`、`content_budget`
+- [ ] 连续 3 页 `light` 不应造成叙事空泛；如不是刻意节奏页，应合并或补充信息
+- [ ] 修复空泛页面时，优先补充证据、案例、对比、影响、行动建议，或改用 Bento 高信息密度模板
+
+### 3. Mermaid Diagram Specific
 
 - [ ] Every Mermaid has explicit `{scale: ...}` set
 - [ ] Full-width Mermaid: `{scale: 0.45-0.6}`
@@ -33,7 +43,7 @@ For each slide, check the following categories:
 - [ ] Mermaid does NOT coexist with bullet list + another element on same slide
 - [ ] Mermaid wrapped in height-constrained container if sharing slide with other content
 
-### 3. Typography
+### 4. Typography
 
 - [ ] No title wraps to a second line with only 1-2 characters (shorten or rephrase)
 - [ ] Chinese titles <= 16 characters
@@ -41,7 +51,7 @@ For each slide, check the following categories:
 - [ ] Heading hierarchy consistent (`#` for page title, content below)
 - [ ] Key terms highlighted with accent color, not overused
 
-### 4. Animation & Interaction
+### 5. Animation & Interaction
 
 - [ ] Max 2 reveal effects per slide
 - [ ] Adjacent slides use different transitions
@@ -50,20 +60,20 @@ For each slide, check the following categories:
 - [ ] Single-element slides (e.g. one diagram) should NOT have v-click on the only element
 - [ ] Lists with <= 3 items do not need v-clicks (show all at once)
 
-### 5. Visual Consistency
+### 6. Visual Consistency
 
 - [ ] Colors match the selected token set throughout
 - [ ] Glass-card style consistent (border, radius, padding)
 - [ ] Icon-box style consistent
 - [ ] Spacing between cards >= 20px
 
-### 6. Content Quality
+### 7. Content Quality
 
 - [ ] Every slide has presenter notes
 - [ ] No placeholder text remaining
 - [ ] Claims backed by research evidence
 
-### 7. Narrative & Structure
+### 8. Narrative & Structure
 
 - [ ] CTA (Call to Action) exists on final or near-final slide
 - [ ] Red thread: each slide's key_message logically connects to next
@@ -71,14 +81,14 @@ For each slide, check the following categories:
 - [ ] Outline key_messages are reflected in actual slide content (compare with outline.json)
 - [ ] Story arc follows archetype's narrativePhases progression
 
-### 8. Factual Accuracy
+### 9. Factual Accuracy
 
 - [ ] Spot-check 3 data claims: find the evidence_ref in presenter notes, trace back to research-report.md finding ID
 - [ ] No unsourced statistics or percentages
 - [ ] Dates and version numbers are current (not outdated)
 - [ ] Company/product names are spelled correctly
 
-### 9. Design System Compliance
+### 10. Design System Compliance
 
 - [ ] Headmatter imports `global-tokens.css` and `page-classes.css`
 - [ ] No raw hex color values (all colors via CSS variables `var(--ppt-*)`)
@@ -86,7 +96,7 @@ For each slide, check the following categories:
 - [ ] Page-classes used where appropriate (`.glass-card`, `.icon-box`, `.section-bar`, etc.)
 - [ ] Font sizes use design system scale (`.ppt-h1` through `.ppt-caption`)
 
-### 10. Accessibility
+### 11. Accessibility
 
 - [ ] Text contrast meets 4.5:1 minimum against backgrounds
 - [ ] Images/diagrams have descriptive alt-text or presenter note description
@@ -94,7 +104,7 @@ For each slide, check the following categories:
 - [ ] v-motion initial positions are within visible canvas area
 - [ ] Content is fully readable in PDF export (no information lost to animation sequence)
 
-### 11. Animation Compliance
+### 12. Animation Compliance
 
 - [ ] v-mark colors match token accent palette (not arbitrary colors)
 - [ ] magic-move has <= 3 steps, each step's code diff <= 30%
@@ -118,7 +128,7 @@ After applying fixes:
 3. If browser tools are available, open the preview URL and visually inspect.
 4. Collect all issues as a structured list:
    - `slide`: slide number or title
-   - `category`: overflow / mermaid / typography / animation / visual / content
+   - `category`: overflow / density / mermaid / typography / animation / visual / content
    - `issue`: what is wrong
    - `fix`: suggested change
 5. If issues found:

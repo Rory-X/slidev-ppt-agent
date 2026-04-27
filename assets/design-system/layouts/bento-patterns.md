@@ -13,6 +13,24 @@ Gap between cards: minimum 16 px, recommended 20–24 px
 - **Consistent gap** — pick one gap value (20 px recommended) and use it throughout the deck.
 - **Alignment** — all card edges align to a shared grid. No arbitrary offsets.
 
+## 信息密度规则
+
+- **默认内容页不应空泛**：除 cover、section、quote、end、强视觉 hero 外，普通内容页至少应包含 3 个有效信息块，或 1 个主视觉 + 2 个支撑块。
+- **优先升级布局，不要立刻拆页**：内容略多时，先使用 two-cols-asymmetric、hero-top、mixed-grid、L-shape、底部洞察条等模式提高承载力。
+- **mixed-grid 是受控高密度模式**：用于 evidence-dashboard、comparison-matrix、process-with-risks、architecture-annotated 等页面，而不是默认规避对象。
+- **轻量组合是推荐做法**：小图 + 注释卡、短代码 + 解释卡、紧凑表格 + 结论条可以同页，前提是只有一个真正的视觉重心。
+- **拆页后仍要满足密度**：不要把一个充实页面拆成两个只排半屏的页面。
+
+### 推荐高信息密度模板
+
+| 模板 | 内容结构 | 适用场景 |
+|------|----------|----------|
+| `evidence-dashboard` | 1 个主张 + 4 个证据卡 | 调研结论、市场判断、竞品分析 |
+| `insight-plus-proof` | 左侧强洞察 + 右侧 3 条证明 | 战略建议、趋势判断、研究解读 |
+| `process-with-risks` | 3 步流程 + 底部风险条 | 项目计划、实施路线、SOP |
+| `comparison-matrix-lite` | 2-3 个对象 × 3 个维度 + 结论条 | 方案评估、路径选择、定价对比 |
+| `architecture-annotated` | 主图 + 3 个注释点 | 技术架构、数据流、平台能力 |
+
 ---
 
 ## Pattern: single-focus

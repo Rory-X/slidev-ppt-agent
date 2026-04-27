@@ -6,23 +6,23 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 
 describe('detectPlatforms', () => {
-  it('always includes agents and claude', () => {
+  it('默认包含 Claude Code 和 Cursor', () => {
     const dir = mkdtempSync(join(tmpdir(), 'ppt-test-'));
     const platforms = detectPlatforms(dir);
-    assert.ok(platforms.includes('agents'));
     assert.ok(platforms.includes('claude'));
-  });
-
-  it('detects cursor when .cursor directory exists', () => {
-    const dir = mkdtempSync(join(tmpdir(), 'ppt-test-'));
-    mkdirSync(join(dir, '.cursor'));
-    const platforms = detectPlatforms(dir);
     assert.ok(platforms.includes('cursor'));
   });
 
-  it('does not include cursor without .cursor directory', () => {
+  it('存在平台目录时检测非默认平台', () => {
+    const dir = mkdtempSync(join(tmpdir(), 'ppt-test-'));
+    mkdirSync(join(dir, '.codex', 'commands'), { recursive: true });
+    const platforms = detectPlatforms(dir);
+    assert.ok(platforms.includes('codex'));
+  });
+
+  it('不存在平台目录时不包含非默认平台', () => {
     const dir = mkdtempSync(join(tmpdir(), 'ppt-test-'));
     const platforms = detectPlatforms(dir);
-    assert.ok(!platforms.includes('cursor'));
+    assert.ok(!platforms.includes('codex'));
   });
 });

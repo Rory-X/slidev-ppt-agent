@@ -15,9 +15,9 @@ phaseSlideRange:
   recap: [1, 2]
 templateMapping:
   objective: [cover, content-split]
-  concept: [detail-two-col, three-cards, content-split]
-  demo: [code-showcase, image-showcase, content-split]
-  practice: [faq, detail-two-col]
+  concept: [detail-two-col, three-cards, content-split, process-with-risks]
+  demo: [code-showcase, image-showcase, content-split, architecture-annotated]
+  practice: [faq, detail-two-col, process-with-risks]
   recap: [summary, three-cards]
 contentTypes:
   objective: [text, quote]
@@ -30,10 +30,13 @@ layoutPolicy:
     - two-cols-asymmetric
     - single-focus
     - three-cols
+    - mixed-grid
   avoid:
     - hero-top
 styleRules:
   maxBulletsPerSlide: 5
+  maxBulletsPerEvidenceSlide: 6
+  minContentBlocksPerContentSlide: 3
   allowCodeBlocks: true
   maxVisualEffectsPerSlide: 2
   emphasisStyle: step-by-step

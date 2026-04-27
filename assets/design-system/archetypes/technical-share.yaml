@@ -12,9 +12,12 @@ layoutPolicy:
     - two-cols-asymmetric
     - single-focus
     - three-cols
-  avoid:
     - mixed-grid
+  avoid:
+    - dense-code-layout
 styleRules:
   maxVisualEffectsPerSlide: 2
-  maxBulletsPerSlide: 6
+  maxBulletsPerSlide: 7
+  maxBulletsPerEvidenceSlide: 8
+  minContentBlocksPerContentSlide: 3
   codeFirstSlidesAllowed: true

@@ -12,9 +12,12 @@ layoutPolicy:
     - hero-top
     - two-cols-symmetric
     - mixed-grid
+    - insight-plus-proof
   avoid:
     - dense-code-layout
 styleRules:
   maxVisualEffectsPerSlide: 2
   maxBulletsPerSlide: 5
+  maxBulletsPerEvidenceSlide: 6
+  minContentBlocksPerContentSlide: 3
   codeFirstSlidesAllowed: false
