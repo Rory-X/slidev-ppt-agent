@@ -1,3 +1,14 @@
+---
+id: summary
+contentTypes: [closing, recap, cta]
+mood: [calm, conclusive]
+density: light
+visualImpact: medium
+bestFor: "演讲收尾，回顾核心要点并留下深刻印象"
+avoid: "不用于正文中间，不承载新信息"
+pairs_well_with: [cover, metrics-strip, faq]
+---
+
 # Page Template: Summary / Ending
 
 Design intent: Centered recap with 3 small cards + closing statement. Uses CSS variables for dark/light mode.

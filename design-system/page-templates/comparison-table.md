@@ -1,3 +1,14 @@
+---
+id: comparison-table
+contentTypes: [comparison, pricing, evaluation]
+mood: [analytical, organized]
+density: heavy
+visualImpact: medium
+bestFor: "结构化的方案/定价/功能对比，有明确推荐选项时"
+avoid: "维度少于 3 行时表格显得空，可用 three-cards 替代"
+pairs_well_with: [comparison-matrix-lite, metrics-strip, faq]
+---
+
 # Page Template: Comparison Table
 
 Design intent: Structured side-by-side comparison for plan tiers, feature matrices, or option evaluation. One column visually promoted as "recommended" via primary-color header background. Wrapped in `.ppt-table` for consistent styling. Dense content uses `text-sm` to stay within overflow limits.

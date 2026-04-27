@@ -1,3 +1,14 @@
+---
+id: faq
+contentTypes: [qa, objections, discussion]
+mood: [conversational, reassuring]
+density: medium
+visualImpact: low
+bestFor: "预判听众疑问并主动回答，消除顾虑建立信任"
+avoid: "问题与主题关联弱时、答案需要大量图表支撑时"
+pairs_well_with: [summary, comparison-table, metrics-strip]
+---
+
 # Page Template: FAQ
 
 Design intent: Q&A format for addressing objections, pre-empting audience questions, or summarizing key takeaways in a conversational structure. Questions are bold and visually separated; answers appear on click for paced delivery. `.section-bar` separators keep the layout scannable even with dense content.

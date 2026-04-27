@@ -1,3 +1,14 @@
+---
+id: architecture-annotated
+contentTypes: [architecture, system-design, flow]
+mood: [analytical, technical]
+density: heavy
+visualImpact: high
+bestFor: "系统架构、数据流、平台能力的可视化展示配文字注释"
+avoid: "非技术受众的高层汇报中避免过于复杂的架构图"
+pairs_well_with: [code-showcase, content-split, detail-two-col]
+---
+
 # 页面模板：架构图 + 注释
 
 设计意图：主区域放架构图或 Mermaid，侧边放 3 个注释点，让技术页既不空泛也不拥挤。适合系统架构、数据流、平台能力和方案设计。

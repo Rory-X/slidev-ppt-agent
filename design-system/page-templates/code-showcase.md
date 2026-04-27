@@ -1,3 +1,14 @@
+---
+id: code-showcase
+contentTypes: [code, implementation, tutorial]
+mood: [analytical, focused, technical]
+density: heavy
+visualImpact: medium
+bestFor: "展示代码实现细节，逐步高亮解释关键逻辑"
+avoid: "非技术受众的汇报、纯概念阐述无代码时"
+pairs_well_with: [content-split, architecture-annotated, three-cards]
+---
+
 # Page Template: Code Showcase
 
 Design intent: Code block with line highlighting on left, explanation cards on right. Uses CSS variables for dark/light mode.

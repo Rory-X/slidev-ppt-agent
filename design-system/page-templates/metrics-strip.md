@@ -1,3 +1,14 @@
+---
+id: metrics-strip
+contentTypes: [metric, kpi, dashboard]
+mood: [analytical, confident]
+density: medium
+visualImpact: medium
+bestFor: "一行 KPI 数字概览，锚定叙述段落的数据支撑"
+avoid: "只有 1 个数字时用 hero-metric；超过 5 个指标时拥挤"
+pairs_well_with: [hero-metric, evidence-dashboard, content-split]
+---
+
 # Page Template: Metrics Strip
 
 Design intent: Horizontal row of KPI cards for dashboard-style data presentation. Each metric displays a big number, label, and optional trend. Flex layout distributes items evenly. Light `.glass-card` background per metric creates visual rhythm. Numbers use `var(--ppt-primary)` for emphasis. Best placed after a narrative section to anchor claims with data.

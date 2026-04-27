@@ -1,0 +1,63 @@
+{
+  "name": "apple-minimal",
+  "description": "Light, spacious palette inspired by Apple keynote aesthetics. Large negative space, clean sans-serif typography, minimal decoration. Best for non-technical audiences, product launches, and executive briefings where clarity and elegance matter most.",
+  "bestFor": "非技术受众的简洁汇报、产品发布、高管 Keynote",
+  "avoid": "代码密集的技术分享、需要深色背景的演示场景",
+  "color": {
+    "background": "#FFFFFF",
+    "surface": "#F5F5F7",
+    "surfaceHover": "#E8E8ED",
+    "border": "rgba(0,0,0,0.06)",
+    "primary": "#0071E3",
+    "secondary": "#6E6E73",
+    "accentWarm": "#FF6B35",
+    "success": "#34C759",
+    "danger": "#FF3B30",
+    "warning": "#FF9500",
+    "textPrimary": "#1D1D1F",
+    "textSecondary": "#424245",
+    "textMuted": "#86868B"
+  },
+  "typography": {
+    "fontDisplay": "SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif",
+    "fontBody": "SF Pro Text, -apple-system, BlinkMacSystemFont, sans-serif",
+    "fontMono": "SF Mono, Menlo, monospace",
+    "scale": {
+      "display": "3.5rem",
+      "h1": "2.25rem",
+      "h2": "1.5rem",
+      "body": "1.05rem",
+      "caption": "0.8rem"
+    },
+    "weight": { "normal": 400, "bold": 600 }
+  },
+  "spacing": {
+    "cardPadding": "32px",
+    "cardGap": "24px",
+    "sectionBarWidth": "0px",
+    "safeMargin": "60px"
+  },
+  "shape": {
+    "borderRadius": "16px",
+    "borderWidth": "0px"
+  },
+  "shadow": {
+    "card": "0 2px 12px rgba(0,0,0,0.06)",
+    "elevated": "0 8px 32px rgba(0,0,0,0.08)"
+  },
+  "motion": {
+    "maxRevealPerSlide": 2,
+    "transition": "fade",
+    "duration": {
+      "fast": "0.3s",
+      "normal": "0.5s",
+      "slow": "0.7s"
+    },
+    "easing": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+    "narrativePacing": {
+      "setup": "slow",
+      "evidence": "normal",
+      "resolution": "fast"
+    }
+  }
+}

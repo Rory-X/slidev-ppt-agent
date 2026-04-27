@@ -1,3 +1,14 @@
+---
+id: toc
+contentTypes: [navigation, structure]
+mood: [calm, organized]
+density: medium
+visualImpact: low
+bestFor: "展示演讲整体脉络，帮助观众建立预期"
+avoid: "内容少于 3 个章节时不需要单独目录页"
+pairs_well_with: [cover, content-split, three-cards]
+---
+
 # Page Template: Table of Contents
 
 Design intent: Section-bar title + numbered card grid. Uses CSS variables for dark/light mode compatibility.

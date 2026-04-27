@@ -1,3 +1,14 @@
+---
+id: quote-highlight
+contentTypes: [quote, persuasion, emotional]
+mood: [inspiring, dramatic, calm]
+density: light
+visualImpact: high
+bestFor: "权威引言或金句的情感锚定，为后续论点铺垫"
+avoid: "引言与主题无关时、引言来源不可靠时"
+pairs_well_with: [image-showcase, content-split, insight-plus-proof]
+---
+
 # Page Template: Quote Highlight
 
 Design intent: Centered quote as the sole focus for persuasion or emotional anchoring. Oversized decorative quotation mark adds visual weight without competing with the text. The quote itself uses larger font, the attribution smaller italic. Optional `v-mark.highlight` on a key phrase draws the eye to the core message.

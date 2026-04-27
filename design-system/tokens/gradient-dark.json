@@ -1,0 +1,63 @@
+{
+  "name": "gradient-dark",
+  "description": "Deep purple-blue gradient foundation with neon accent highlights. Modern SaaS and product launch aesthetic. High visual impact, best for creative presentations and product demos where you want to excite and energize the audience.",
+  "bestFor": "产品发布、创意展示、开发者大会、需要视觉冲击力的演示",
+  "avoid": "正式企业汇报、学术报告、保守行业的内部会议",
+  "color": {
+    "background": "#0D0B1A",
+    "surface": "#1A1530",
+    "surfaceHover": "#241E40",
+    "border": "rgba(139,92,246,0.15)",
+    "primary": "#8B5CF6",
+    "secondary": "#06B6D4",
+    "accentWarm": "#F472B6",
+    "success": "#34D399",
+    "danger": "#F87171",
+    "warning": "#FBBF24",
+    "textPrimary": "#F8FAFC",
+    "textSecondary": "#CBD5E1",
+    "textMuted": "#64748B"
+  },
+  "typography": {
+    "fontDisplay": "Inter, system-ui, sans-serif",
+    "fontBody": "Inter, system-ui, sans-serif",
+    "fontMono": "JetBrains Mono, Fira Code, monospace",
+    "scale": {
+      "display": "3rem",
+      "h1": "2rem",
+      "h2": "1.35rem",
+      "body": "0.95rem",
+      "caption": "0.75rem"
+    },
+    "weight": { "normal": 400, "bold": 700 }
+  },
+  "spacing": {
+    "cardPadding": "24px",
+    "cardGap": "20px",
+    "sectionBarWidth": "4px",
+    "safeMargin": "40px"
+  },
+  "shape": {
+    "borderRadius": "14px",
+    "borderWidth": "1px"
+  },
+  "shadow": {
+    "card": "0 4px 24px rgba(139,92,246,0.1)",
+    "elevated": "0 12px 40px rgba(139,92,246,0.15)"
+  },
+  "motion": {
+    "maxRevealPerSlide": 2,
+    "transition": "fade-out",
+    "duration": {
+      "fast": "0.25s",
+      "normal": "0.4s",
+      "slow": "0.6s"
+    },
+    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "narrativePacing": {
+      "setup": "slow",
+      "evidence": "fast",
+      "resolution": "normal"
+    }
+  }
+}

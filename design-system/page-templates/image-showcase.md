@@ -1,3 +1,14 @@
+---
+id: image-showcase
+contentTypes: [image, storytelling, product, case-study]
+mood: [inspiring, immersive, dramatic]
+density: medium
+visualImpact: high
+bestFor: "用全屏图片烘托氛围，讲述产品愿景或展示真实场景"
+avoid: "无高质量图片素材时、纯数据/代码内容"
+pairs_well_with: [quote-highlight, hero-metric, content-split]
+---
+
 # Page Template: Image Showcase
 
 Design intent: Full-bleed imagery with overlaid text for visual storytelling, product screenshots, or scene-setting. Uses Slidev's `layout: image` or `layout: image-left` for native image handling. A semi-transparent glass overlay ensures text remains readable against any background. Alt-text documented in presenter notes for accessibility.

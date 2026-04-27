@@ -107,19 +107,54 @@ Mermaid diagrams are the #1 source of overflow issues. Follow these strictly:
 5. **Forbidden combo**: never place Mermaid + code block + bullet list on the same slide.
 6. **Prefer simpler diagram types**: `graph TD` > `flowchart` for simple flows; avoid `classDiagram` unless truly needed.
 
+## 模板选择决策框架
+
+在为每一页选择模板时，遵循**语义匹配**而非硬编码列表：
+
+### Step 1：读取模板元数据
+
+每个 `design-system/page-templates/*.md` 文件头部有 YAML 元数据：
+- `contentTypes`：适合的内容类型
+- `mood`：情绪调性
+- `density`：信息密度
+- `visualImpact`：视觉冲击力
+- `bestFor` / `avoid`：使用/避免场景
+- `pairs_well_with`：推荐搭配的其他模板
+
+### Step 2：匹配逻辑
+
+```
+当前页内容类型 ∈ 模板.contentTypes → 候选
+当前页情绪需求 ∈ 模板.mood → 加分
+outline 标注的 density 匹配模板.density → 加分
+```
+
+### Step 3：节奏感检查（关键）
+
+- 连续两页不能都是 `visualImpact: high`
+- 如果前一页是 high，当前页必须选择 medium 或 low
+- 参考 `design-system/style-combos.md` 中的验证套餐确保整体连贯
+
+### Step 4：兼容性检查
+
+- 检查模板是否声明了 `incompatible_tokens`
+- 检查 archetype 的 `incompatible` 规则
+- 检查 `pairs_well_with` 确认与相邻页面的模板搭配合理
+
 ## 组合流程
 
 1. 阅读 outline 和 style plan。
 2. 设置 headmatter（主题、标题、转场、来自 token set 的字体）。
 3. 引入 `design-system/styles/` 中的全局样式。
 4. 针对 outline 中的每一页：
-   a. 根据内容判断最合适的页面类型和布局。
+   a. 根据内容判断最合适的页面类型和布局（遵循上方的模板选择决策框架）。
    b. 读取 `density`、`page_type`、`content_budget`；选择既满足最低内容量又不溢出的布局。
    c. 参考最接近的 page-template 作为设计语言基线。
    d. 使用 Slidev markdown 编写页面，并应用设计系统 CSS class。
    e. 应用合适的动画（见下方动画策略）。
    f. 添加演讲者备注（HTML 注释）。
-5. 根据 slidev skill 的溢出规则进行自检。
+5. 进行节奏感自检：回看全 deck 的 visualImpact 序列，确保无连续 high-high。
+6. 根据 slidev skill 的溢出规则进行自检。
 
 ## Animation Strategy
 

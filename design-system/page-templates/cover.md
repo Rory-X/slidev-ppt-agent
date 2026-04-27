@@ -1,3 +1,14 @@
+---
+id: cover
+contentTypes: [opening, branding]
+mood: [calm, authoritative]
+density: light
+visualImpact: medium
+bestFor: "演讲开场第一页，建立主题权威感和视觉基调"
+avoid: "不用于正文内容页或中间过渡"
+pairs_well_with: [toc, content-split, gradient-divider]
+---
+
 # Page Template: Cover
 
 Design intent: Centered symmetric hierarchy with glass-morphism frame. Calm, authoritative first impression. Uses CSS variables for dark/light mode compatibility.

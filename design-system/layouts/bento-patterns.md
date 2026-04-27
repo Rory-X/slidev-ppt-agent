@@ -373,6 +373,205 @@ No margins. Content fills the entire canvas for maximum visual impact.
 
 ---
 
+---
+
+## New Patterns (for new templates)
+
+### Pattern: Device Frame Center
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│       ┌─── device frame ─────────┐        │
+│       │ ● ● ●  ┌──────────┐     │        │
+│       │         │screenshot│     │        │
+│       │         │  content │     │        │
+│       │         └──────────┘     │        │
+│       └──────────────────────────┘        │
+│           [optional caption below]         │
+│                                            │
+└────────────────────────────────────────────┘
+```
+
+Dimensions: device frame 680 × 380 centered; caption area 680 × 60 below.
+Used by: `device-mockup` (light variant).
+Best for: product screenshots, UI demos, single-device showcase.
+
+### Pattern: Dual Device Asymmetric
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│    ┌── laptop frame ──────┐    ┌─phone─┐  │
+│    │ ● ● ●               │    │       │  │
+│    │   ┌──────────────┐   │    │  app  │  │
+│    │   │  desktop UI  │   │    │  view │  │
+│    │   └──────────────┘   │    │       │  │
+│    └──────────────────────┘    └───────┘  │
+│                                            │
+│    ┌── metric ──┐  ┌── metric ──┐         │
+│    │   98%      │  │   < 2s     │         │
+│    └────────────┘  └────────────┘         │
+└────────────────────────────────────────────┘
+```
+
+Dimensions: laptop 480 × 320; phone 140 × 280; metrics strip 200 × 60 each.
+Used by: `device-mockup` (heavy variant).
+Best for: responsive design showcase, multi-platform demos.
+
+### Pattern: Code Evolution (Magic Move)
+
+```
+┌────────────────────────────────────────────┐
+│  ┌── section bar ────────────────────────┐ │
+│  └───────────────────────────────────────┘ │
+│                                            │
+│  ┌────── magic-move code block ──────────┐ │
+│  │  ````md magic-move                    │ │
+│  │  ```ts                                │ │
+│  │    // step 1 code                     │ │
+│  │  ```                                  │ │
+│  │  ```ts                                │ │
+│  │    // step 2 code (animated diff)     │ │
+│  │  ```                                  │ │
+│  │  ````                                 │ │
+│  └───────────────────────────────────────┘ │
+│                                            │
+│  ┌── step 1 ──┐  ┌── step 2 ──┐          │
+│  │ annotation │  │ annotation │           │
+│  └────────────┘  └────────────┘          │
+└────────────────────────────────────────────┘
+```
+
+Dimensions: code block 900 × 300 (with maxHeight); annotation strip 200 × 60 each.
+Used by: `magic-move-code`.
+Best for: code refactoring demos, API migration, pattern evolution.
+
+### Pattern: Before/After Toggle
+
+```
+┌────────────────────────────────────────────┐
+│  ┌── section bar ────────────────────────┐ │
+│  └───────────────────────────────────────┘ │
+│                                            │
+│  ┌────── v-switch container ─────────────┐ │
+│  │  ┌─ BEFORE ─────────────────────────┐ │ │
+│  │  │  • pain point 1                  │ │ │
+│  │  │  • pain point 2                  │ │ │
+│  │  │  • pain point 3                  │ │ │
+│  │  └──────────────────────────────────┘ │ │
+│  │            ↕ click to toggle ↕        │ │
+│  │  ┌─ AFTER ──────────────────────────┐ │ │
+│  │  │  • improvement 1                 │ │ │
+│  │  │  • improvement 2                 │ │ │
+│  │  └──────────────────────────────────┘ │ │
+│  └───────────────────────────────────────┘ │
+│                                            │
+│  ┌─ metric ─┐  ┌─ metric ─┐  ┌─ metric ─┐│
+│  │  -75%    │  │  +66pp   │  │   4x     ││
+│  └──────────┘  └──────────┘  └──────────┘│
+└────────────────────────────────────────────┘
+```
+
+Dimensions: toggle container 900 × 300; metrics strip 280 × 70 each.
+Used by: `before-after` (light variant).
+Best for: optimization results, UI redesigns, process improvements.
+
+### Pattern: Before/After Side-by-Side
+
+```
+┌────────────────────────────────────────────┐
+│  ┌── section bar ────────────────────────┐ │
+│  └───────────────────────────────────────┘ │
+│                                            │
+│  ┌── OLD (danger) ────┐  ┌── NEW (success)┐│
+│  │  step 1            │  │  step 1        ││
+│  │  step 2            │  │  step 2        ││
+│  │  step 3            │  │  step 3        ││
+│  │  step 4            │  │                ││
+│  │  耗时：7 天        │  │  耗时：15 分钟 ││
+│  └────────────────────┘  └────────────────┘│
+└────────────────────────────────────────────┘
+```
+
+Dimensions: 435 × 400 each (two-cols-symmetric).
+Used by: `before-after` (heavy variant).
+Best for: side-by-side flow comparison with clear time/effort contrast.
+
+### Pattern: Full-Bleed Gradient
+
+```
+┌════════════════════════════════════════════┐
+║                                            ║
+║           (gradient background)            ║
+║                                            ║
+║              PART 02                       ║
+║                                            ║
+║           ████████████                     ║
+║           Section Title                    ║
+║           ─────────────                    ║
+║           subtitle text                    ║
+║                                            ║
+║         ■ ■ ■ □ □  (progress)             ║
+║                                            ║
+└════════════════════════════════════════════┘
+```
+
+Dimensions: 980 × 552 (full canvas, no safe margins needed for decorative page).
+Used by: `gradient-divider`.
+Best for: section transitions, narrative mood shifts, dramatic pauses.
+Note: incompatible with `corporate-blue` and `mono-editorial` tokens.
+
+### Pattern: Speaker Spotlight (Centered)
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│              ┌──────┐                      │
+│              │avatar│                      │
+│              │ icon │                      │
+│              └──────┘                      │
+│                                            │
+│              Name Here                     │
+│           Title · Company                  │
+│           ────────────────                 │
+│           Bio text paragraph               │
+│                                            │
+│          @github  @twitter                 │
+│                                            │
+└────────────────────────────────────────────┘
+```
+
+Dimensions: avatar 96 × 96; text block 400 × 200 centered.
+Used by: `speaker-hero` (light variant).
+Best for: keynote speaker introduction, guest bio page.
+
+### Pattern: Speaker Spotlight (Asymmetric)
+
+```
+┌────────────────────────────────────────────┐
+│                                            │
+│  ┌──avatar──┐   ┌── bio content ────────┐ │
+│  │          │   │  KEYNOTE SPEAKER      │ │
+│  │  (icon)  │   │  Name                 │ │
+│  │          │   │  Title · Company      │ │
+│  │          │   │                       │ │
+│  │  social  │   │  Bio paragraph...     │ │
+│  │  links   │   │                       │ │
+│  └──────────┘   │  ┌──┐ ┌──┐ ┌──┐     │ │
+│                  │  │15│ │ 3│ │50K│     │ │
+│                  │  │yr│ │pt│ │★ │     │ │
+│                  │  └──┘ └──┘ └──┘     │ │
+│                  └──────────────────────┘ │
+└────────────────────────────────────────────┘
+```
+
+Dimensions: avatar column 200 × 400; bio column 640 × 400.
+Used by: `speaker-hero` (heavy variant).
+Best for: speaker with credentials/metrics to display.
+
+---
+
 ## Quick Reference
 
 | Pattern              | Dimensions (px)                          | Cards | Best for                      |
@@ -387,3 +586,11 @@ No margins. Content fills the entire canvas for maximum visual impact.
 | L-shape              | 540 × 472 + 340 × 226 each              | 1 + 2 | code + output + notes         |
 | T-shape              | 900 × 180 + 435 × 272 each              | 1 + 2 | section intro + columns       |
 | full-bleed           | 980 × 552 (no margins)                  | 1     | covers, visual breaks         |
+| device-center        | 680 × 380 + 680 × 60 caption            | 1 + 1 | product screenshot            |
+| dual-device          | 480 × 320 + 140 × 280 + metrics         | 2 + N | responsive design demo        |
+| code-evolution       | 900 × 300 code + 200 × 60 annotations   | 1 + N | magic-move code               |
+| before-after-toggle  | 900 × 300 toggle + 280 × 70 metrics     | 1 + 3 | v-switch comparison           |
+| before-after-split   | 435 × 400 each (symmetric)              | 2     | side-by-side flow contrast    |
+| gradient-full        | 980 × 552 (full canvas, decorative)     | 0     | section dividers              |
+| speaker-center       | 96 × 96 avatar + 400 × 200 text         | 1     | speaker intro (centered)      |
+| speaker-asymmetric   | 200 × 400 + 640 × 400                   | 1 + 1 | speaker with credentials      |

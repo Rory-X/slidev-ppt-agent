@@ -1,3 +1,14 @@
+---
+id: detail-two-col
+contentTypes: [comparison, architecture, explanation]
+mood: [analytical, detailed]
+density: heavy
+visualImpact: medium
+bestFor: "两个核心组件的深度对比，展示内部子模块和职责分工"
+avoid: "信息量少时（每列少于 2 个子项）会显得空泛"
+pairs_well_with: [content-split, architecture-annotated, code-showcase]
+---
+
 # Page Template: Detail Two-Column
 
 Design intent: Two glass cards side-by-side with internal sub-sections. Uses CSS variables for dark/light mode.

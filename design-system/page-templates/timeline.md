@@ -1,3 +1,14 @@
+---
+id: timeline
+contentTypes: [roadmap, milestone, history, process]
+mood: [organized, forward-looking]
+density: medium
+visualImpact: medium
+bestFor: "时间轴展示里程碑、路线图或历史演进"
+avoid: "节点少于 3 个时显得单薄；超过 5 个时拥挤"
+pairs_well_with: [process-with-risks, three-cards, metrics-strip]
+---
+
 # Page Template: Timeline
 
 Design intent: Horizontal timeline for roadmaps, milestones, or historical progression. Each node is a `.glass-card` with date and description, connected visually by a CSS line. Progressive `v-clicks` reveal builds narrative momentum left-to-right. Flex layout ensures even spacing regardless of item count.

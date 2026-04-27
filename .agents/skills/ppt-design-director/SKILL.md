@@ -54,8 +54,37 @@ Map audience × scenario × goal to the recommended archetype and token set. Whe
 | Investors | Pitch meeting | Invest/fund | pitch-deck | pitch-modern |
 | Mixed team | Training workshop | Acquire skill | training-workshop | warm-creative |
 | Management | Quarterly review | Track progress | quarterly-review | corporate-blue |
-| Customers | Product launch | Buy/adopt | product-launch | pitch-modern |
+| Customers | Product launch | Buy/adopt | product-launch | pitch-modern / gradient-dark |
 | Researchers | Conference | Share findings | research-readout | tech-minimal |
+| Developers | Tech conference | Inspire/teach | conference-talk | tech-minimal / gradient-dark |
+| Non-technical | Keynote / demo day | Impress/excite | product-launch | apple-minimal |
+
+## 模板选择决策框架
+
+模板选择不应依赖硬编码映射表，而应基于**内容语义匹配**。每个 page-template 文件头部包含 YAML 元数据（`contentTypes`、`mood`、`density`、`visualImpact`、`pairs_well_with`），Designer Agent 在 style-plan 中应利用这些元数据指导 Architect 和 Composer 的模板选择。
+
+### 选择流程
+
+```
+内容是什么类型？ → 匹配 contentTypes
+应该传达什么情绪？ → 匹配 mood
+信息密度多高？ → 匹配 density
+前后页的视觉冲击力？ → 用 visualImpact 控制节奏
+```
+
+### 节奏感规则（写入 style-plan）
+
+- 连续两页不能都是 `visualImpact: high`（避免审美疲劳）
+- 在 `high` 页面后安排 `low` 或 `medium` 页面作为"呼吸"
+- 全 deck 的 visualImpact 节奏应呈现波浪形：低-中-高-中-低-高-低
+
+### 风格组合套餐参考
+
+在 `design-system/style-combos.md` 中提供了验证过的模板组合方案。Designer Agent 在写 style-plan 时应选择最接近的 combo 作为基线，然后在 combo 范围内微调。
+
+### Token 与模板的兼容性
+
+某些模板声明了 `incompatible_tokens`（如 `gradient-divider` 不兼容 `corporate-blue`）。style-plan 中推荐的模板列表必须排除与所选 Token 不兼容的模板。
 
 ## Animation Policy Table
 
@@ -72,6 +101,11 @@ Animation density by page type. Consult this table when writing the `animationPo
 | Summary | fade | 1 | No | No |
 | Hero-metric | fade | 1 | No | Yes (number) |
 | Timeline | slide-left | 1 (v-clicks) | No | No |
+| Magic-move-code | slide-left | 2 | Yes (required) | No |
+| Device-mockup | fade | 1 | No | No |
+| Before-after | fade | 2 (toggle + metrics) | No | Optional |
+| Speaker-hero | fade | 0-2 (credentials) | No | No |
+| Gradient-divider | fade | 0 | No | No |
 
 ## Accessibility Rules
 

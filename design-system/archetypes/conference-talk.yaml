@@ -1,0 +1,53 @@
+name: conference-talk
+description: Developer conference talk or tech meetup presentation. Hook-story-demo-takeaway structure optimized for live audience engagement with code demos and visual impact.
+recommendedToken: tech-minimal
+alternativeTokens: [gradient-dark]
+narrativePhases:
+  - hook-and-context
+  - problem-story
+  - solution-architecture
+  - live-demo
+  - key-takeaways
+phaseSlideRange:
+  hook-and-context: [2, 3]
+  problem-story: [2, 4]
+  solution-architecture: [3, 5]
+  live-demo: [2, 4]
+  key-takeaways: [2, 3]
+templateMapping:
+  hook-and-context: [cover, speaker-hero, quote-highlight, gradient-divider]
+  problem-story: [content-split, insight-plus-proof, before-after, image-showcase]
+  solution-architecture: [architecture-annotated, detail-two-col, three-cards, process-with-risks]
+  live-demo: [magic-move-code, code-showcase, device-mockup, before-after]
+  key-takeaways: [summary, metrics-strip, faq, timeline]
+layoutPolicy:
+  preferred:
+    - two-cols-asymmetric
+    - single-focus
+    - mixed-grid
+    - hero-top
+  avoid:
+    - dense-code-layout
+    - full-bleed
+contentTypes:
+  hook-and-context: [opening, branding, quote]
+  problem-story: [narrative, insight, comparison]
+  solution-architecture: [architecture, explanation, process]
+  live-demo: [code, refactoring, product, demo]
+  key-takeaways: [closing, recap, metric, qa]
+styleRules:
+  maxBulletsPerSlide: 5
+  maxBulletsPerEvidenceSlide: 7
+  minContentBlocksPerContentSlide: 2
+  maxVisualEffectsPerSlide: 2
+  codeFirstSlidesAllowed: true
+  allowCodeBlocks: true
+  emphasisStyle: visual-impact
+  gradientDividerAllowed: true
+incompatible:
+  - template: comparison-table
+    inPhases: [hook-and-context, live-demo]
+  - template: team-grid
+    inPhases: [problem-story, solution-architecture, live-demo]
+  - template: faq
+    inPhases: [hook-and-context, problem-story]

@@ -1,6 +1,17 @@
+---
+id: insight-plus-proof
+contentTypes: [insight, argument, strategy]
+mood: [authoritative, persuasive]
+density: heavy
+visualImpact: high
+bestFor: "强观点 + 证据链，适合战略建议、趋势判断和研究解读"
+avoid: "观点不够鲜明时（只是陈述事实）不需要此模板"
+pairs_well_with: [evidence-dashboard, quote-highlight, content-split]
+---
+
 # 页面模板：洞察 + 证明
 
-设计意图：左侧承载强观点，右侧用 2-3 条证据或案例证明观点，避免“一个观点占半屏”的空泛页面。适合战略建议、产品定位、趋势判断和研究解读。
+设计意图：左侧承载强观点，右侧用 2-3 条证据或案例证明观点，避免"一个观点占半屏"的空泛页面。适合战略建议、产品定位、趋势判断和研究解读。
 
 ## 标准变体：左侧洞察 + 右侧证明链
 
@@ -22,7 +33,7 @@ transition: slide-left
       <div class="tag-badge">核心洞察</div>
       <div class="text-2xl font-semibold mt-4 leading-snug" style="color:var(--ppt-text)">只优化工具能力，会把问题推迟到落地阶段；先设计采用路径，才能把试点变成规模化。</div>
     </div>
-    <div class="mt-8 text-sm leading-relaxed" style="color:var(--ppt-text-body)">因此方案不应只回答“能不能做”，还要回答“谁先用、如何衡量、怎样扩散”。</div>
+    <div class="mt-8 text-sm leading-relaxed" style="color:var(--ppt-text-body)">因此方案不应只回答"能不能做"，还要回答"谁先用、如何衡量、怎样扩散"。</div>
   </div>
 
   <div class="grid grid-rows-3 gap-4">
@@ -45,6 +56,6 @@ transition: slide-left
 </div>
 
 <!--
-演讲者备注：这一页的重点是把“工具能力”重新框定为“采用路径”。右侧三条证明分别对应落地风险、场景选择和预算延续。证据来源：audience:F2, ops:F4。
+演讲者备注：这一页的重点是把"工具能力"重新框定为"采用路径"。右侧三条证明分别对应落地风险、场景选择和预算延续。证据来源：audience:F2, ops:F4。
 -->
 ```

@@ -1,3 +1,14 @@
+---
+id: evidence-dashboard
+contentTypes: [evidence, conclusion, analysis]
+mood: [authoritative, decisive]
+density: heavy
+visualImpact: high
+bestFor: "一个核心判断配多条证据支撑，适合市场判断、竞品分析、管理汇报"
+avoid: "证据不足 3 条时显得单薄，可用 insight-plus-proof 替代"
+pairs_well_with: [insight-plus-proof, metrics-strip, hero-metric]
+---
+
 # 页面模板：证据仪表盘
 
 设计意图：用于把一个核心判断和多条证据放在同一页。页面上方给出结论，下方用 4 张证据卡补足信息密度，适合市场判断、调研结论、竞品分析和管理汇报。

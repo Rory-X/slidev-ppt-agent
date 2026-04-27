@@ -1,3 +1,14 @@
+---
+id: content-split
+contentTypes: [narrative, architecture, explanation]
+mood: [analytical, focused]
+density: medium
+visualImpact: medium
+bestFor: "左文右图的经典解释型页面，文字论述配可视化佐证"
+avoid: "纯数据页面或无图表内容不适合强行分栏"
+pairs_well_with: [three-cards, architecture-annotated, detail-two-col]
+---
+
 # Page Template: Content Split (Left Text + Right Diagram)
 
 Design intent: Left side stacks 2-3 content cards. Right side shows diagram. Uses CSS variables for dark/light mode.

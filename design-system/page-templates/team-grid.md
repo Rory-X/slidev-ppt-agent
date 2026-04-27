@@ -1,3 +1,14 @@
+---
+id: team-grid
+contentTypes: [team, people, credits]
+mood: [warm, professional]
+density: medium
+visualImpact: low
+bestFor: "多人团队介绍、项目致谢或组织架构展示"
+avoid: "只介绍 1 个人时用 speaker-hero 更好"
+pairs_well_with: [summary, cover, timeline]
+---
+
 # Page Template: Team Grid
 
 Design intent: Grid of team member cards for introductions, credits, or org charts. Each card features an icon placeholder for avatar, name, and role. Uses `.glass-card` for visual consistency and CSS grid for responsive layout. Progressive reveal keeps focus on one member at a time during spoken introductions.

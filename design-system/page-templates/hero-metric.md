@@ -1,3 +1,14 @@
+---
+id: hero-metric
+contentTypes: [metric, kpi, impact]
+mood: [dramatic, inspiring]
+density: light
+visualImpact: high
+bestFor: "核心数字的戏剧性揭示，制造'wow'时刻"
+avoid: "数字不够震撼时（变化 < 10%）不值得整页展示"
+pairs_well_with: [metrics-strip, evidence-dashboard, content-split]
+---
+
 # Page Template: Hero Metric
 
 Design intent: Bold single-number focus for KPI reveals. The oversized metric anchored center draws instant attention, with a trend indicator and subtitle providing context. Minimal animation — just the number reveal — keeps pacing crisp. Uses `.metric-big` class and CSS variables for theming.

@@ -1,3 +1,14 @@
+---
+id: three-cards
+contentTypes: [comparison, features, categories]
+mood: [organized, balanced]
+density: medium
+visualImpact: medium
+bestFor: "三个并列维度的对等展示，如功能特性、团队分工、方案选项"
+avoid: "内容不对等时（一项远多于其他）不适合强行三等分"
+pairs_well_with: [content-split, detail-two-col, metrics-strip]
+---
+
 # Page Template: Three Cards
 
 Design intent: Three equal glass cards for parallel comparison. Uses CSS variables for dark/light mode.

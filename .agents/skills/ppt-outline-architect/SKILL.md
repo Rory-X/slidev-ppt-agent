@@ -41,8 +41,10 @@ JSON 必须符合 `schemas/outline.schema.json`。
 - `content`: 要点数组
 - `evidence_refs`: 引用的调研证据来源
 - `density`: 页面信息密度，取值为 `light`、`standard`、`dense`
-- `page_type`: 页面类型，取值为 `hero`、`comparison`、`process`、`evidence`、`dashboard`、`architecture`、`quote`、`section`、`cta`
+- `page_type`: 页面类型，取值为 `hero`、`comparison`、`process`、`evidence`、`dashboard`、`architecture`、`quote`、`section`、`cta`、`code`、`demo`、`speaker`
 - `content_budget`: 该页应承载的信息结构，例如 `1 个主张 + 3 个证据卡 + 1 条行动建议`
+- `mood`: 该页期望的情绪调性（可选但推荐），取值为 `analytical`、`inspiring`、`dramatic`、`calm`、`playful`、`authoritative`、`persuasive`、`technical`
+- `visual_impact`: 视觉冲击力预期（可选但推荐），取值为 `low`、`medium`、`high`。用于下游 Composer 的节奏感控制
 
 ## 页数约束
 - 严格遵守 brief 中 `pageRequirements.totalPages`

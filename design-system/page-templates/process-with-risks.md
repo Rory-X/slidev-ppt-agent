@@ -1,3 +1,14 @@
+---
+id: process-with-risks
+contentTypes: [process, roadmap, implementation]
+mood: [analytical, cautious]
+density: heavy
+visualImpact: medium
+bestFor: "展示实施步骤并标注每步风险，适合项目计划和迁移方案"
+avoid: "步骤超过 4 步时一页放不下，应拆分或改用 timeline"
+pairs_well_with: [timeline, three-cards, evidence-dashboard]
+---
+
 # 页面模板：流程 + 风险
 
 设计意图：在一页内展示 3 步流程，并用底部风险条补充约束条件。适合项目计划、实施路线、迁移方案、培训流程和运营 SOP。

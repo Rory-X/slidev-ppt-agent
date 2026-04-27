@@ -1,3 +1,14 @@
+---
+id: comparison-matrix-lite
+contentTypes: [comparison, decision, evaluation]
+mood: [analytical, decisive]
+density: heavy
+visualImpact: medium
+bestFor: "2-3 个方案在 3 个维度上的紧凑比较，附带明确结论"
+avoid: "选项超过 4 个或维度超过 5 个时会溢出"
+pairs_well_with: [comparison-table, evidence-dashboard, insight-plus-proof]
+---
+
 # 页面模板：轻量对比矩阵
 
 设计意图：替代容易溢出的宽表格。用 2-3 个对象 × 3 个维度做紧凑比较，并用高亮列或底部结论明确推荐方向。
